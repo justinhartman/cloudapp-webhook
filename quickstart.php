@@ -9,7 +9,7 @@
  * @author   Justin Hartman <j.hartman@ctca.co.za>
  * @license  https://creativeacademy.ac.za Copyright
  * @link     https://creativeacademy.ac.za
- * @since    2020
+ * @since    0.0.1
  */
 require __DIR__ . '/vendor/autoload.php';
 
