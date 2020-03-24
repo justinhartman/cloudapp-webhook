@@ -1,0 +1,15 @@
+# Need to create the logs and media folders on the server but don't track files.
+/logs/*
+!/logs/.gitkeep
+/media/*
+!/media/.gitkeep
+# Don't track vendor.
+/vendor/
+# App specific ignores.
+credentials.json
+token.json
+info.md
+# Dev items.
+credentials_quickstart.json
+/testing/
+guzzle.php
