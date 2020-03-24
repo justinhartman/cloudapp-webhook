@@ -6,12 +6,13 @@
  *
  * PHP version 7.3
  *
- * @category App
- * @package  QuickStart
- * @author   Justin Hartman <j.hartman@ctca.co.za>
- * @license  https://creativeacademy.ac.za Copyright
- * @link     https://creativeacademy.ac.za
- * @since    0.0.1
+ * @category  App
+ * @package   Upload
+ * @author    Justin Hartman <j.hartman@ctca.co.za>
+ * @copyright 2020 Cape Town Creative Academy (Pty) Limited
+ * @license   https://gitlab.com/ctca/cloudapp-webhook/-/blob/master/LICENSE (c)
+ * @link      https://gitlab.com/ctca/cloudapp-webhook
+ * @since     0.0.1
  */
 require_once __DIR__.'/vendor/autoload.php';
 
