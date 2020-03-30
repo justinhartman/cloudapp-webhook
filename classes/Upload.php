@@ -50,7 +50,7 @@ class Upload
      */
     public function getClient()
     {
-        // putenv('GOOGLE_APPLICATION_CREDENTIALS=./.credentials.json');
+        putenv('GOOGLE_APPLICATION_CREDENTIALS=./.credentials.json');
         $client = new \Google_Client();
         $client->setApplicationName('CloudApp for Google Drive');
         $client->useApplicationDefaultCredentials();
