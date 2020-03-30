@@ -6,7 +6,7 @@
  *
  * PHP version 7.3
  *
- * @category  App
+ * @category  App\Classes
  * @package   Upload
  * @author    Justin Hartman <j.hartman@ctca.co.za>
  * @copyright 2020 Cape Town Creative Academy (Pty) Limited
@@ -62,7 +62,7 @@ class Upload
     }
 
     /**
-     * Upload video.
+     * Upload media.
      *
      * @param Google_Service_Drive_DriveFile $path The file to upload.
      * @param string                         $name The name of the file.
@@ -71,7 +71,7 @@ class Upload
      *         Monolog\Logger           Log upload to app log file.
      *         object                   JSON response.
      */
-    public function uploadVideo($path, $name)
+    public function uploadMedia($path, $name)
     {
         // Setup the log file.
         $log = new Log;
@@ -167,4 +167,4 @@ class Upload
 /**
  * Run the method.
  */
-// uploadVideo();
+// uploadMedia();

@@ -6,7 +6,7 @@
  *
  * PHP version 7.3
  *
- * @category  App
+ * @category  App\Classes
  * @package   Log
  * @author    Justin Hartman <j.hartman@ctca.co.za>
  * @copyright 2020 Cape Town Creative Academy (Pty) Limited
