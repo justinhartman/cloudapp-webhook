@@ -46,7 +46,7 @@
       "post-install-cmd": [
           "rm -rf .github/",
           "rm .gitignore composer.json composer.lock Procfile README.md",
-          "cp -r . htdocs/"
+          "cp -R * htdocs/"
       ]
     }
 }
