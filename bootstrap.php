@@ -15,11 +15,16 @@
 require_once __DIR__.'/vendor/autoload.php';
 
 // Set unlimited memory (bad idea).
-// ini_set('memory_limit', '-1');
-ini_set('memory_limit', '1024M');
+ini_set('memory_limit', '-1');
+// ini_set('memory_limit', '1024M');
 
 // Set the application header to JSON.
 header('Content-Type: application/json');
+
+/**
+* Path to the sqlite file.
+*/
+const PATH_TO_SQLITE_FILE = 'database/database.sqlite';
 
 /**
  * Autoload Class
@@ -30,6 +35,8 @@ function autoload()
 {
     include_once getcwd()."/classes/Download.php";
     include_once getcwd()."/classes/Log.php";
+    include_once getcwd()."/classes/Database/SqliteConnect.php";
+    include_once getcwd()."/classes/Database/SqliteInsert.php";
     include_once getcwd()."/classes/Upload.php";
 }
 

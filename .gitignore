@@ -17,7 +17,11 @@ info.md
 credentials_quickstart.json
 /testing/
 guzzle.php
+index_original.php
+test.php
 # Potential items to be used still.
 webhook.php
 config/
-database/
+/database/*
+!/database/database.sqlite
+/python/
