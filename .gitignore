@@ -5,8 +5,8 @@
 !/media/images/.gitkeep
 /media/videos/*
 !/media/videos/.gitkeep
-# /media/*
-# !/media/.gitkeep
+/media/*
+!/media/.gitkeep
 # Don't track vendor.
 /vendor/
 # App specific ignores.
