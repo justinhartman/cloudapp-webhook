@@ -51,6 +51,7 @@ class Upload
     public function getClient()
     {
         // putenv('GOOGLE_APPLICATION_CREDENTIALS=./.credentials.json');
+        // putenv('GOOGLE_APPLICATION_CREDENTIALS=/lamp0/web/vhosts/cloudapp.hartman.me/credentials.json');
         putenv('GOOGLE_APPLICATION_CREDENTIALS=/lamp0/web/includes/credentials.json');
         $client = new \Google_Client();
         $client->setApplicationName('CloudApp for Google Drive');
