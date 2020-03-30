@@ -21,6 +21,26 @@ use App\Download;
 use App\Log;
 
 /**
+ * Check the request type
+ *
+ * @return boolean
+ */
+function checkMethod()
+{
+    $request = $_SERVER['REQUEST_METHOD'];
+    $allowed = array('POST');
+
+    //Check to see if the current request method isn't allowed.
+    if (!in_array($request, $allowed)) {
+        header($_SERVER["SERVER_PROTOCOL"] . " 405 Method Not Allowed", true, 405);
+
+        return false;
+    }
+
+    return true;
+}
+
+/**
  * JSON Payload.
  *
  * @return array Array object from the JSON payload.
@@ -31,6 +51,39 @@ function payload()
     $data = json_decode($json, true);
 
     return $data;
+}
+
+// Setup the log file.
+$log = new Log;
+$logger = $log->logFile();
+
+/**
+ * Make sure the method is POST else exit.
+ */
+try {
+    if (checkMethod() === false) {
+        throw new Exception('Method not allowed.');
+    }
+} catch (Exception $e) {
+    $logger->error(
+        sprintf(
+            'Method not allowed. Code: %s. Error: %s.',
+            405,
+            $e->getMessage()
+        )
+    );
+    echo json_encode(
+        array(
+        'event' => 'error',
+        'code' => 405,
+        'payload' =>
+            array(
+                'error' => $e->getMessage()
+            )
+        )
+    );
+
+    exit;
 }
 
 // Create new payload object.
