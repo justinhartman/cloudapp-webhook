@@ -1,8 +1,12 @@
 # Need to create the logs and media folders on the server but don't track files.
 /logs/*
 !/logs/.gitkeep
-/media/*
-!/media/.gitkeep
+/media/images/*
+!/media/images/.gitkeep
+/media/videos/*
+!/media/videos/.gitkeep
+# /media/*
+# !/media/.gitkeep
 # Don't track vendor.
 /vendor/
 # App specific ignores.
@@ -13,3 +17,7 @@ info.md
 credentials_quickstart.json
 /testing/
 guzzle.php
+# Potential items to be used still.
+webhook.php
+config/
+database/
