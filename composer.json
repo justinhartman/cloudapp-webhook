@@ -41,12 +41,12 @@
     "scripts": {
       "compile": [
         "rm -rf .github/",
-        "rm README.md"
+        "rm .gitignore composer.json composer.lock Procfile quickstart.php README.md"
       ],
       "post-install-cmd": [
           "rm -rf .github/",
-          "rm .gitignore composer.json composer.lock Procfile README.md",
-          "@rsync -a --progress ./ htdocs --exclude htdocs"
+          "rm .gitignore composer.json composer.lock Procfile quickstart.php README.md",
+          "/usr/bin/rsync -a --progress ./ htdocs --exclude htdocs"
       ]
     }
 }
