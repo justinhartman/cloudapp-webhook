@@ -42,8 +42,6 @@ class Log
     /**
      * Logs the token callback.
      *
-     * @param object $logger The logFile() method object.
-     *
      * @return Monolog\Logger Log cache key receiving new token.
      */
     public function getTokenCallback()
@@ -56,5 +54,45 @@ class Log
         };
 
         return $callback;
+    }
+
+    /**
+     * Log headers to file.
+     *
+     * @return void
+     */
+    public function logHeaders()
+    {
+        $myFile = "logs/headers.log";
+        $date = date('Y-m-d H:i:s');
+        $fh = fopen($myFile, 'a') or die("can't open file");
+        fwrite($fh, "\n----------------------------------------------------\n");
+        fwrite($fh, $date);
+        fwrite($fh, "\n");
+        foreach ($_SERVER as $h => $v) {
+            if (preg_match('/HTTP_(.+)/', $h, $hp)) {
+                fwrite($fh, "$h = $v\n");
+            }
+        }
+        fwrite($fh, "\r\n");
+        fwrite($fh, file_get_contents('php://input'));
+        fclose($fh);
+    }
+
+    /**
+     * Log request body.
+     *
+     * @return void
+     */
+    public function logRequest()
+    {
+        $myFile = "logs/request.log";
+        $date = date('Y-m-d H:i:s');
+        $fh = fopen($myFile, 'a') or die("can't open file");
+        fwrite($fh, "\n----------------------------------------------------\n");
+        fwrite($fh, $date);
+        fwrite($fh, "\n");
+        fwrite($fh, file_get_contents('php://input'));
+        fclose($fh);
     }
 }
