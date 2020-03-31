@@ -51,10 +51,6 @@ function payload()
     $json = file_get_contents('php://input');
     $data = json_decode($json, true);
 
-    $logger = (new Log)->logFile();
-    $logdata = json_encode(json_decode($json));
-    $logger->info($logdata);
-
     return $data;
 }
 
@@ -79,26 +75,6 @@ function dbInsert($event, $itemName, $itemUrl, $created)
 
     return $insert;
 }
-
-/**
- * Log headers to file.
- *
- * @return void
- */
-function logHeaders()
-{
-    $myFile = "./logs/request_log_file.log";
-    $fh = fopen($myFile, 'a') or die("can't open file");
-    fwrite($fh, "\n\n------------------------------------------------------\n");
-    foreach ($_SERVER as $h => $v)
-        if (preg_match('/HTTP_(.+)/', $h, $hp))
-            fwrite($fh, "$h = $v\n");
-    fwrite($fh, "\r\n");
-    fwrite($fh, file_get_contents('php://input'));
-    fclose($fh);
-}
-// Log headers to file.
-logHeaders();
 
 // Setup the log file.
 $log = new Log;
@@ -142,6 +118,14 @@ $payloadName  = $payload['payload']['item_name'];
 $payloadUrl   = $payload['payload']['item_url'];
 $payloadDate  = $payload['payload']['created_at'];
 
+/**
+ * Log raw headers to file.
+ *
+ * @todo Uncomment the catch Exception below. Remove this.
+ */
+$log->logHeaders();
+$log->logRequest();
+
 try {
     dbInsert($payloadEvent, $payloadName, $payloadUrl, $payloadDate);
     $logger->info(
@@ -153,6 +137,11 @@ try {
         )
     );
 } catch (Exception $e) {
+    // Log raw headers to file.
+    // $log->logHeaders();
+    // $log->logRequest();
+
+    // Log error to Monolog.
     $logger->error(
         sprintf(
             'Index dbInsert error code %s. Error: %s',
