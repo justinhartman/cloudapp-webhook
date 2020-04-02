@@ -3,10 +3,10 @@
 !/logs/.gitkeep
 /media/images/*
 !/media/images/.gitkeep
+/media/other/*
+!/media/other/.gitkeep
 /media/videos/*
 !/media/videos/.gitkeep
-/media/*
-!/media/.gitkeep
 # Don't track vendor.
 /vendor/
 # App specific ignores.
@@ -26,3 +26,4 @@ config/
 # !/database/database.sqlite
 #/python/
 *.pyc
+/python/idiot.py
