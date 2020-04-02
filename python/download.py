@@ -1,7 +1,14 @@
-import os
+#!/usr/bin/env python3
+# Import app files.
+import constant
+import mime_types
+# Import system libraries.
+import os.path
 import requests
 import math
 import sqlite3
+import random
+import string
 from sqlite3 import Error
 from datetime import datetime
 
@@ -71,6 +78,7 @@ def select_items(conn, limit):
         item_link = row[2]
         return item_id, item_name, item_link
     else:
+        print(date_time() + " ERROR: No rows in payload table.")
         return 1
 
 
@@ -90,6 +98,7 @@ def insert_record(conn, payload_id, file_size, file_status):
     query = "INSERT INTO `downloads` (`payload_id`, `file_size`, `status_code`,\
      `created_at`) VALUES (?, ?, ?, strftime('%Y-%m-%d %H:%M:%S', 'now'))"
     cur.execute(query, (payload_id, file_size, file_status,))
+    conn.commit()
     insert_id = cur.lastrowid
     cur.close()
 
@@ -113,10 +122,122 @@ def update_record(conn, status, payload_id):
     cur = conn.cursor()
     query = "UPDATE `payload` SET `downloaded` = ?, `downloaded_at` = \
             strftime('%Y-%m-%d %H:%M:%S','now') WHERE `id` = ?"
-    cur.execute(query, (status, payload_id,))
+    execute = cur.execute(query, (status, payload_id,))
+    conn.commit()
     cur.close()
 
-    return payload_id
+    return bool(execute)
+
+
+def update_filename(conn, name, payload_id):
+    """
+    Update new filename in the payload table.
+
+    :param conn:       The Connection.
+    :type  conn:       Object
+    :param name:       The new filename.
+    :type  name:       Boolean
+    :param payload_id: The payload identifier of the record to update.
+    :type  payload_id: Integer
+
+    :returns: Payload identifier.
+    :rtype:   Integer
+    """
+    cur = conn.cursor()
+    query = "UPDATE `payload` SET `payload_item_name` = ? WHERE `id` = ?"
+    cur.execute(query, (name, payload_id,))
+    conn.commit()
+    cur.close()
+
+    return name
+
+
+def build_url(url):
+    """
+    Builds a download url.
+
+    :param url: The original url to convert.
+    :type  url: String
+
+    :returns: New download url.
+    :rtype:   String
+    """
+    replace = constant.HTTP_URL
+    payload = url.replace(replace, '')
+
+    link = constant.HTTP_URL + '/items/' + payload + '/download'
+
+    return link
+
+
+def check_path():
+    """
+    Check the path to the media folder exists.
+
+    :returns: True or false.
+    :rtype:   Boolean
+    """
+    check = os.path.exists(constant.MEDIA_PATH)
+
+    return check
+
+
+def random_string(size=32):
+    """
+    Generates a random string.
+
+    :param size: The length of the string to create.
+    :type  size: number
+
+    :returns: Random string
+    :rtype:   string
+    """
+    chars = string.ascii_letters + string.digits
+    joined = ''.join(random.choice(chars) for x in range(size))
+
+    return joined
+
+
+def get_extension(url):
+    """
+    Returns file extension based on mime type.
+
+    :param url: The url to the download file.
+    :type  url: string
+
+    :returns: File extension|False
+    :rtype:   string|boolean
+    """
+    file = requests.get(url, allow_redirects=True)
+
+    # Get the content-type header.
+    content_type = file.headers['content-type']
+
+    for a in mime_types.ARRAY:
+        if content_type in a:
+            return a[1]
+    else:
+        return bool(0)
+
+
+def save_path(name):
+    """
+    Generates a full path to download the file to.
+
+    :param name: The file name.
+    :type  name: String
+
+    :returns: Full path with filename.
+    :rtype:   String
+    """
+    if '.png' in name:
+        full_path = constant.MEDIA_IMAGE + name
+    elif '.mov' in name:
+        full_path = constant.MEDIA_VIDEO + name
+    else:
+        full_path = constant.MEDIA_OTHER + name
+
+    return full_path
 
 
 def convert_size(size_bytes):
@@ -140,47 +261,6 @@ def convert_size(size_bytes):
     return "%s %s" % (s, size_name[i])
 
 
-def build_url(url):
-    """
-    Builds a download url.
-
-    :param url: The original url to convert.
-    :type  url: String
-
-    :returns: New download url.
-    :rtype:   String
-    """
-    replace = 'https://media.ctca.co.za/'
-    payload = url.replace(replace, '')
-
-    link = 'https://media.ctca.co.za/items/' + payload + '/download'
-
-    return link
-
-
-def save_path(name):
-    """
-    Generates a full path to download the file to.
-
-    :param name: The file name.
-    :type  name: String
-
-    :returns: Full path with filename.
-    :rtype:   String
-    """
-    os.chdir("/srv/data/web/vhosts/cloudapp.hartman.me/htdocs/media")
-    # os.chdir('../media')  # localhost
-
-    if '.png' in name:
-        path = os.getcwd() + '/images/' + name
-    elif '.mov' in name:
-        path = os.getcwd() + '/videos/' + name
-    else:
-        return 0
-
-    return path
-
-
 def download_file(name, url):
     """
     Downloads a file.
@@ -201,13 +281,18 @@ def download_file(name, url):
 
     if file_status == 404:
         file_size = '0'
-    elif file_status == 200:
+    elif file_status == 200 or file_status == 302:
         length = float(file.headers['content-length'])
         file_size = convert_size(length)
 
         # Save file to path.
+        # with open(path, 'wb') as f:
+        #     f.write(file.content)
+
+        # Save the file in chunks.
         with open(path, 'wb') as f:
-            f.write(file.content)
+            for chunk in file.iter_content(chunk_size=128):
+                f.write(chunk)
     else:
         file_status = 0
         file_size = '0'
@@ -231,7 +316,7 @@ def date_time():
 def main():
     print(date_time() + " Starting the downloads.")
     # Path the database.
-    database = r"../database/database.sqlite"
+    database = constant.DATABASE_PATH
     # create a database connection.
     print(date_time() + " Opening the database connection.")
     conn = create_connection(database)
@@ -239,16 +324,46 @@ def main():
         print(date_time() + " Getting list of records from database.")
         rows = select_all(conn)
         for row in rows:
+            """
+            Define some variables to reuse.
+            """
+            # Row data.
             item_id = row[0]
             name = row[1]
             link = row[2]
-
-            # Download the file to server.
+            # Generate a download URL from the link variable.
             download_url = build_url(link)
+
+            """
+            Make sure the media folder actually exists.
+            """
+            if check_path() is False:
+                print(date_time() + " ERROR: Media folder is not accessible.")
+                return 1
+
+            """
+            If no name is set, build a name and check the filetype.
+            """
+            if name is None:
+                # Get file extension from content-type.
+                ext = get_extension(download_url)
+                # Generate a random string.
+                ran = random_string()
+                # Concatenate the filename with extension.
+                new_name = ran + str(ext)
+                # Save the new filename in the database.
+                update_filename(conn, new_name, item_id)
+                name = new_name
+
+            """
+            Download the file to server.
+            """
             status, size = download_file(name, download_url)
             print(date_time()+" "+str(status)+" File: "+name+" URL: "+link)
 
-            # Update DB if successfull.
+            """
+            Update database if successfull.
+            """
             if status == 200:
                 insert_record(conn, item_id, size, status)
                 print(date_time()+" "+name+" inserted to downloads.")
@@ -259,8 +374,8 @@ def main():
                 print(date_time() + " 404 file not found.")
             else:
                 print(date_time() + " General error")
-        # else:
-        #     return 0
+        else:
+            return 0
     print(date_time() + " Closing the database connection.")
     conn.close()
 
