@@ -24,4 +24,5 @@ webhook.php
 config/
 /database/*
 # !/database/database.sqlite
-/python/
+#/python/
+*.pyc
