@@ -168,8 +168,8 @@ def save_path(name):
     :returns: Full path with filename.
     :rtype:   String
     """
-    # os.chdir("/srv/data/web/vhosts/cloudapp.hartman.me/htdocs/media")
-    os.chdir('../media')  # localhost
+    os.chdir("/srv/data/web/vhosts/cloudapp.hartman.me/htdocs/media")
+    # os.chdir('../media')  # localhost
 
     if '.png' in name:
         path = os.getcwd() + '/images/' + name
