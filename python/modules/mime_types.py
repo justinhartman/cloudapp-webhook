@@ -1,4 +1,4 @@
-ARRAY = [
+types = [
     ["application/epub+zip", ".epub"],
     ["application/excel", ".xls"],
     ["application/gnutar", ".tgz"],
@@ -22,9 +22,12 @@ ARRAY = [
     ["application/vnd.oasis.opendocument.presentation", ".odp"],
     ["application/vnd.oasis.opendocument.spreadsheet", ".ods"],
     ["application/vnd.oasis.opendocument.text", ".odt"],
-    ["application/vnd.openxmlformats-officedocument.presentationml.presentation", ".pptx"],
-    ["application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", ".xlsx"],
-    ["application/vnd.openxmlformats-officedocument.wordprocessingml.document", ".docx"],
+    ["application/vnd.openxmlformats-officedocument.presentationml.presentation",
+        ".pptx"],
+    ["application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        ".xlsx"],
+    ["application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        ".docx"],
     ["application/vnd.rar", ".rar"],
     ["application/vnd.visio", ".vsd"],
     ["application/x-7z-compressed", ".7z"],
