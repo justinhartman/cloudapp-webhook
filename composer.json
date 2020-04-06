@@ -17,7 +17,8 @@
     ],
     "require": {
         "php": "^7.3.0",
-        "google/apiclient": "^2.0"
+        "google/apiclient": "^2.0",
+        "phpmailer/phpmailer": "^6.1"
     },
     "extra": {
       "heroku": {

@@ -18,6 +18,7 @@
 require_once __DIR__.'/bootstrap.php';
 
 use App\Log;
+use App\Mail;
 use App\Database\SqliteConnect;
 use App\Database\SqliteInsert;
 
@@ -44,7 +45,7 @@ function checkMethod()
 /**
  * JSON Payload.
  *
- * @return array Array object from the JSON payload.
+ * @return array JSON Array object.
  */
 function payload()
 {
@@ -57,31 +58,69 @@ function payload()
 /**
  * DB Insert
  *
- * @param string $event    The payload event.
- * @param string $itemName The payload item name.
- * @param string $itemUrl  The payload item url.
- * @param string $created  The payload created date.
+ * @param string $event   The payload event.
+ * @param string $name    The payload item name.
+ * @param string $url     The payload item url.
+ * @param string $created The payload created date.
  *
- * @return void
+ * @return App\Database\SqliteInsert
  */
-function dbInsert($event, $itemName, $itemUrl, $created)
+function dbInsert(string $event, string $name, string $url, string $created)
 {
     // Setup the DB PDO.
     $pdo = (new SqliteConnect())->connect();
     $sqlite = new SqliteInsert($pdo);
 
     // Build the query
-    $insert = $sqlite->insert($event, $itemName, $itemUrl, $created);
+    $insert = $sqlite->insert($event, $name, $url, $created);
 
     return $insert;
 }
 
-// Setup the log file.
+/**
+ * Sends email.
+ *
+ * @param object $logger  The log file object.
+ * @param string $subject The email subject.
+ * @param string $body    The email body.
+ *
+ * @return App\Log Log the success or error to the log file.
+ */
+function sendMail(object $logger, string $subject, string $body)
+{
+    $conn = (new Mail())->connect();
+    $recipient = array(
+        'name' => 'Justin Hartman',
+        'email' => 'j.hartman@ctca.co.za'
+    );
+
+    try {
+        $mail = new Mail;
+        $mail->send($conn, $recipient, $subject, $body);
+        $log = $logger->info(sprintf('PHPMailer Sent: %s', $subject));
+    } catch (Exception $e) {
+        $log = $logger->error(sprintf('PHPMailer Error: %s', $e->getMessage()));
+    }
+
+    return $log;
+}
+
+/**
+ * Setup Log file instance.
+ *
+ * @var App\Log
+ */
 $log = new Log;
 $logger = $log->logFile();
 
 /**
- * Make sure the method is POST else exit.
+ * Log raw headers to file.
+ */
+$log->logHeaders();
+$log->logRequest();
+
+/**
+ * Test for POST else exit.
  */
 try {
     if (checkMethod() === false) {
@@ -95,7 +134,7 @@ try {
             $e->getMessage()
         )
     );
-    echo json_encode(
+    $jsonArray = json_encode(
         array(
         'event' => 'error',
         'code' => 405,
@@ -106,7 +145,9 @@ try {
         )
     );
 
-    exit;
+    $json = print $jsonArray;
+
+    return $json;
 }
 
 // Create new payload object.
@@ -119,37 +160,44 @@ $payloadUrl   = $payload['payload']['item_url'];
 $payloadDate  = $payload['payload']['created_at'];
 
 /**
- * Log raw headers to file.
+ * Insert record to DB.
  *
- * @todo Uncomment the catch Exception below. Remove this.
+ * Try to insert the record to the database. If successful, log a info message
+ * and send an email with success details. If failed, log an error message, send
+ * an email with error details and return an error JSON object.
  */
-$log->logHeaders();
-$log->logRequest();
-
 try {
-    dbInsert($payloadEvent, $payloadName, $payloadUrl, $payloadDate);
-    $logger->info(
-        sprintf(
+    $insert = dbInsert($payloadEvent, $payloadName, $payloadUrl, $payloadDate);
+    if ($insert) {
+        // Build success messages.
+        $mailSubSuccess = $payloadName . " Inserted into DB";
+        $successMessage = sprintf(
             'Inserted %s (%s) created at %s into SQLite Database.',
             $payloadName,
             $payloadUrl,
             $payloadDate
-        )
-    );
+        );
+        // Log error to Monolog.
+        $logger->info($successMessage);
+        // Send success mail.
+        sendMail($logger, $mailSubSuccess, $successMessage);
+    }
 } catch (Exception $e) {
-    // Log raw headers to file.
-    // $log->logHeaders();
-    // $log->logRequest();
+    // Build error messages.
+    $mailSubError = $payloadName . " dbInsert error";
+    $errorMessage = sprintf(
+        'Index dbInsert error code %s. Error: %s',
+        $e->getCode(),
+        $e->getMessage()
+    );
 
     // Log error to Monolog.
-    $logger->error(
-        sprintf(
-            'Index dbInsert error code %s. Error: %s',
-            $e->getCode(),
-            $e->getMessage()
-        )
-    );
-    echo json_encode(
+    $logger->error($errorMessage);
+    // Send error mail.
+    sendMail($logger, $mailSubError, $errorMessage);
+
+    // Echo JSON object.
+    $jsonArray = json_encode(
         array(
         'event' => 'error',
         'code' => $e->getCode(),
@@ -160,5 +208,7 @@ try {
         )
     );
 
-    exit;
+    $json = print $jsonArray;
+
+    return $json;
 }
