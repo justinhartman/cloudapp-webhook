@@ -14,17 +14,32 @@
  */
 require_once __DIR__.'/vendor/autoload.php';
 
-// Set unlimited memory (bad idea).
+/**
+ * PHP configuration.
+ */
 ini_set('memory_limit', '-1');
-// ini_set('memory_limit', '1024M');
+ini_set('date.timezone', 'Africa/Johannesburg');
 
-// Set the application header to JSON.
+/**
+ * HTTP Headers - Set the application header to JSON.
+ */
 header('Content-Type: application/json');
 
 /**
-* Path to the sqlite file.
-*/
-const PATH_TO_SQLITE_FILE = 'database/database.sqlite';
+ * Path to the sqlite file.
+ */
+const SQLITE_DATABASE = 'database/database.sqlite';
+
+/**
+ * General Mail settings.
+ */
+const MAIL_HOST = 'smtp.mailgun.org';
+const MAIL_USER = 'ctca@mail.fightspam.email';
+const MAIL_PASS = 'dbf388c574dc4d63fa5c5b4d51d47866-aa4b0867-edb535ef';
+const MAIL_PORT = 587;
+const MAIL_FROM_NAME = 'Creative Academy';
+const MAIL_FROM_ADDRESS = 'noreply@ctca.co.za';
+const MAIL_DEBUG = false;
 
 /**
  * Autoload Class
@@ -35,6 +50,7 @@ function autoload()
 {
     include_once getcwd()."/classes/Download.php";
     include_once getcwd()."/classes/Log.php";
+    include_once getcwd()."/classes/Mail.php";
     include_once getcwd()."/classes/Database/SqliteConnect.php";
     include_once getcwd()."/classes/Database/SqliteInsert.php";
     include_once getcwd()."/classes/Upload.php";
