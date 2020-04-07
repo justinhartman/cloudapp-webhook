@@ -19,11 +19,14 @@ credentials_quickstart.json
 guzzle.php
 index_original.php
 test.php
+/old/
 # Potential items to be used still.
 webhook.php
 config/
 /database/*
 # !/database/database.sqlite
 #/python/
+/pythontest/
 *.pyc
-/python/idiot.py
+__pycache__/
+idiot.py

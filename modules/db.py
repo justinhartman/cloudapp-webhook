@@ -96,6 +96,29 @@ def insert_record(conn, payload_id, file_size, file_status):
     return insert_id
 
 
+def insert_upload(conn, download_id, drive_id, drive_name):
+    """
+    Insert downloaded file details in uploads table.
+
+    :param conn:       The Connection.
+    :type  conn:       Object
+    :param download_id: The payload identifier of the record downloaded.
+    :type  download_id: Integer
+
+    :returns: Last row id
+    :rtype:   Integer
+    """
+    cur = conn.cursor()
+    query = "INSERT INTO `uploads` (`download_id`, `drive_id`, `drive_name`,\
+     `created_at`) VALUES (?, ?, ?, strftime('%Y-%m-%d %H:%M:%S', 'now'))"
+    cur.execute(query, (download_id, drive_id, drive_name,))
+    conn.commit()
+    insert_id = cur.lastrowid
+    cur.close()
+
+    return insert_id
+
+
 def update_record(conn, status, payload_id):
     """
     Update the downloaded column in the payload table.
