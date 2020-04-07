@@ -2,6 +2,7 @@
 import sys
 sys.path.append('../')
 import app
+sys.path.append(app.GOOGLE_PACKAGES)
 import json
 # import media
 from apiclient import discovery, errors
