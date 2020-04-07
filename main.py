@@ -3,6 +3,7 @@ import app
 import db
 import downloads
 import media
+import upload
 import utility
 
 
@@ -61,10 +62,19 @@ def main():
             Update database if successfull.
             """
             if status == 200:
-                db.insert_record(conn, item_id, size, status)
-                print(utility.date_time()+" "+name+" inserted in downloads.")
+                insert_id = db.insert_record(conn, item_id, size, status)
+                print(utility.date_time()+" "+str(insert_id)+" inserted in downloads.")
                 db.update_record(conn, 1, item_id)
                 print(utility.date_time()+" Updated id "+str(item_id)+".")
+
+                # Make connection to Google Drive API.
+                credentials = upload.get_client()
+                # Upload file to API.
+                print(utility.date_time()+" Uploading to Google Drive.")
+                file_id, file_name = upload.upload_media(credentials, name)
+                # Insert Upload into DB.
+                db.insert_upload(conn, insert_id, file_id, file_name)
+                print(utility.date_time()+" "+file_id+" inserted in uploads.")
             elif status == 404:
                 db.update_record(conn, 2, item_id)
                 print(utility.date_time() + " 404 file not found.")
