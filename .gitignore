@@ -11,22 +11,15 @@
 /vendor/
 # App specific ignores.
 credentials.json
-token.json
 info.md
-# Dev items.
-credentials_quickstart.json
-/testing/
-guzzle.php
-index_original.php
-test.php
-/old/
-# Potential items to be used still.
-webhook.php
-config/
+# Database
 /database/*
+!/database/create.sql
 # !/database/database.sqlite
-#/python/
-/pythontest/
+# Python
+idiot.py
+# Dev items.
 *.pyc
 __pycache__/
-idiot.py
+/old/
+/pythontest/
