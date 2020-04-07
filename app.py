@@ -3,8 +3,8 @@ sys.path.append('./modules')
 """
 General.
 """
-# APP_HOME = '/srv/data/web/vhosts/cloudapp.hartman.me/htdocs/'
-APP_HOME = './'
+APP_HOME = '/srv/data/web/vhosts/cloudapp.hartman.me/htdocs/'
+# APP_HOME = './'
 """
 Python Packages.
 """
