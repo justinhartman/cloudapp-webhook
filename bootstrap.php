@@ -5,7 +5,7 @@
  * PHP version 7.3
  *
  * @category  App
- * @package   Base
+ * @package   Bootstrap
  * @author    Justin Hartman <j.hartman@ctca.co.za>
  * @copyright 2020 Cape Town Creative Academy (Pty) Limited
  * @license   https://gitlab.com/ctca/cloudapp-webhook/-/blob/master/LICENSE (c)
@@ -48,12 +48,10 @@ const MAIL_DEBUG = false;
  */
 function autoload()
 {
-    include_once getcwd()."/classes/Download.php";
     include_once getcwd()."/classes/Log.php";
     include_once getcwd()."/classes/Mail.php";
     include_once getcwd()."/classes/Database/SqliteConnect.php";
     include_once getcwd()."/classes/Database/SqliteInsert.php";
-    include_once getcwd()."/classes/Upload.php";
 }
 
 // Autoload the Class files.
