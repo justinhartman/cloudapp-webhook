@@ -53,7 +53,7 @@ def date_time(offset):
     :rtype:   String
     """
     today = datetime.now() + timedelta(hours=offset)
-    formatted = today.strftime('%F %T SAST')
+    formatted = today.strftime('%F %T')
 
     return formatted
 
