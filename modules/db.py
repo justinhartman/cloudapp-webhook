@@ -69,7 +69,7 @@ def select_items(conn, limit):
         item_link = row[2]
         return item_id, item_name, item_link
     else:
-        print(utility.date_time() + " ERROR: No rows in payload table.")
+        print(utility.date_time(2) + " ERROR: No rows in payload table.")
         return 1
 
 
