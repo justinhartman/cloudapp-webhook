@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from datetime import datetime
+from datetime import datetime, timedelta
 import math
 import os.path
 import random
@@ -42,15 +42,18 @@ def convert_size(size_bytes):
     return "%s %s" % (s, size_name[i])
 
 
-def date_time():
+def date_time(offset):
     """
     Returns a formatted current date and time.
+
+    :param offset: An offset to accommodate for any server time differences.
+    :type  offset: Integer
 
     :returns: Formatted date time.
     :rtype:   String
     """
-    today = datetime.now()
-    formatted = today.strftime('%Y-%m-%d %H:%M:%S')
+    today = datetime.now() + timedelta(hours=offset)
+    formatted = today.strftime('%F %T SAST')
 
     return formatted
 

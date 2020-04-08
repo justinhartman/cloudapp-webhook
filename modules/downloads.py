@@ -33,7 +33,7 @@ def download_file(name, url):
             for chunk in file.iter_content(chunk_size=128):
                 f.write(chunk)
 
-        print(utility.date_time() + " Downloaded " + file_size)
+        print(utility.date_time(2) + " Downloaded " + file_size)
     else:
         file_status = 0
         file_size = '0'
