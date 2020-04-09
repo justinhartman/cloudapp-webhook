@@ -1,4 +1,11 @@
 #!/usr/bin/env python3
+# -*- coding: UTF-8 -*-
+"""
+Uploads module.
+
+A module containing methods for uploading files from the server to Google Drive
+using the Google Drive API.
+"""
 import sys
 sys.path.append('../')
 import app
@@ -8,18 +15,35 @@ from apiclient.http import MediaFileUpload
 
 
 def get_client():
+    """
+    Create a Google API connection using a credentials file.
+
+    :returns: Google API Client.
+    :rtype:   object
+    """
     from google.oauth2 import service_account
 
-    SCOPES = ['https://www.googleapis.com/auth/drive']
-    SERVICE_ACCOUNT_FILE = './credentials.json'
+    google_scopes = ['https://www.googleapis.com/auth/drive']
+    service_account_file = app.GOOGLE_CREDENTIALS
     credentials = service_account.Credentials.from_service_account_file(
-        SERVICE_ACCOUNT_FILE, scopes=SCOPES
+        service_account_file, scopes=google_scopes
     )
 
     return credentials
 
 
 def upload_media(credentials, filename):
+    """
+    Upload media to Google Drive.
+
+    :param credentials: get_client() connection.
+    :type  credentials: object
+    :param filename:    The filename of the upload.
+    :type  filename:    string
+
+    :returns: Array containing ID and name.
+    :rtype:   array
+    """
     import media
     mime_type, folder_id = media.get_file_type(filename)
 

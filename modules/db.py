@@ -1,4 +1,11 @@
 #!/usr/bin/env python3
+# -*- coding: UTF-8 -*-
+"""
+Database module.
+
+This module creates a database connection and contains a series of queries for
+use in the application.
+"""
 import sqlite3
 from sqlite3 import Error
 import utility
@@ -6,13 +13,13 @@ import utility
 
 def create_connection(db_file):
     """
-    Create a database connection to the database specified by the db_file.
+    Create a database connection using the location to the database.
 
     :param db_file: Database file.
-    :type  db_file: String
+    :type  db_file: object
 
     :returns: Connection object or Error.
-    :rtype:   Object
+    :rtype:   object
     """
     conn = None
     try:
@@ -28,10 +35,10 @@ def select_all(conn):
     Query all rows in the payload table which have to be downloaded.
 
     :param conn: The Connection.
-    :type  conn: Object
+    :type  conn: object
 
     :returns: Array of items.
-    :rtype:   Array
+    :rtype:   array
     """
     cur = conn.cursor()
     query = "SELECT `id`, `payload_item_name`, `payload_item_url` FROM \
@@ -48,12 +55,12 @@ def select_items(conn, limit):
     Query payload returning a limited number of rows.
 
     :param conn:  The Connection.
-    :type  conn:  Object
+    :type  conn:  object
     :param limit: The number of records to return.
-    :type  limit: Integer
+    :type  limit: integer
 
-    :returns: item_id|item_name|item_link
-    :rtype:   Integer|String|String
+    :returns: Array containing ID, name and link.|False
+    :rtype:   mixed|boolean
     """
     cur = conn.cursor()
     query = "SELECT `id`, `payload_item_name`, `payload_item_url` FROM \
@@ -77,13 +84,17 @@ def insert_record(conn, payload_id, file_size, file_status):
     """
     Insert downloaded file details in downloads table.
 
-    :param conn:       The Connection.
-    :type  conn:       Object
-    :param payload_id: The payload identifier of the record downloaded.
-    :type  payload_id: Integer
+    :param conn:        The Connection.
+    :type  conn:        object
+    :param payload_id:  The payload identifier of the record downloaded.
+    :type  payload_id:  integer
+    :param file_size:   The file size.
+    :type  file_size:   string
+    :param file_status: The status of the download.
+    :type  file_status: string
 
     :returns: Last row id
-    :rtype:   Integer
+    :rtype:   integer
     """
     cur = conn.cursor()
     query = "INSERT INTO `downloads` (`payload_id`, `file_size`, `status_code`,\
@@ -100,13 +111,17 @@ def insert_upload(conn, download_id, drive_id, drive_name):
     """
     Insert downloaded file details in uploads table.
 
-    :param conn:       The Connection.
-    :type  conn:       Object
+    :param conn:        The Connection.
+    :type  conn:        object
     :param download_id: The payload identifier of the record downloaded.
-    :type  download_id: Integer
+    :type  download_id: integer
+    :param drive_id:    Google Drive folder ID.
+    :type  drive_id:    string
+    :param drive_name:  The filename.
+    :type  drive_name:  string
 
     :returns: Last row id
-    :rtype:   Integer
+    :rtype:   integer
     """
     cur = conn.cursor()
     query = "INSERT INTO `uploads` (`download_id`, `drive_id`, `drive_name`,\
@@ -124,14 +139,14 @@ def update_record(conn, status, payload_id):
     Update the downloaded column in the payload table.
 
     :param conn:       The Connection.
-    :type  conn:       Object
+    :type  conn:       object
     :param status:     The download status.
-    :type  status:     Boolean
+    :type  status:     boolean
     :param payload_id: The payload identifier of the record to update.
-    :type  payload_id: Integer
+    :type  payload_id: integer
 
-    :returns: Payload identifier.
-    :rtype:   Integer
+    :returns: True/False
+    :rtype:   boolean
     """
     cur = conn.cursor()
     query = "UPDATE `payload` SET `downloaded` = ?, `downloaded_at` = \
@@ -148,14 +163,14 @@ def update_filename(conn, name, payload_id):
     Update new filename in the payload table.
 
     :param conn:       The Connection.
-    :type  conn:       Object
+    :type  conn:       object
     :param name:       The new filename.
-    :type  name:       Boolean
+    :type  name:       boolean
     :param payload_id: The payload identifier of the record to update.
-    :type  payload_id: Integer
+    :type  payload_id: integer
 
     :returns: Payload identifier.
-    :rtype:   Integer
+    :rtype:   integer
     """
     cur = conn.cursor()
     query = "UPDATE `payload` SET `payload_item_name` = ? WHERE `id` = ?"

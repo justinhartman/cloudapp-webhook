@@ -1,3 +1,10 @@
+#!/usr/bin/env python3
+# -*- coding: UTF-8 -*-
+"""
+Application configuration file.
+
+A series of constants and module imports for reuse in the application.
+"""
 import sys
 sys.path.append('./modules')
 """
@@ -5,6 +12,7 @@ General.
 """
 APP_HOME = '/srv/data/web/vhosts/cloudapp.hartman.me/htdocs/'
 # APP_HOME = './'
+GOOGLE_CREDENTIALS = APP_HOME + 'credentials.json'
 """
 Python Packages.
 """
