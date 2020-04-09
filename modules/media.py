@@ -1,20 +1,30 @@
 #!/usr/bin/env python3
+# -*- coding: UTF-8 -*-
+"""
+Media module.
+
+A module containing methods for working with media. These include methods for:
+- Building new URLs.
+- Get file extension from mime-types.
+- Define the save path for media files.
+- Define the folder to upload media files to.
+"""
 import sys
+import requests
 sys.path.append('../')
 import app
 import mime_types
-import requests
 
 
 def build_url(url):
     """
-    Builds a download url.
+    Build a download url.
 
     :param url: The original url to convert.
-    :type  url: String
+    :type  url: string
 
     :returns: New download url.
-    :rtype:   String
+    :rtype:   string
     """
     replace = app.HTTP_URL
     items = "https://media.ctca.co.za/items"
@@ -25,7 +35,7 @@ def build_url(url):
 
 def get_extension(url):
     """
-    Returns file extension based on mime type.
+    Return a file extension based on mime type.
 
     :param url: The url to the download file.
     :type  url: string
@@ -38,22 +48,25 @@ def get_extension(url):
     # Get the content-type header.
     content_type = file.headers['content-type']
 
-    for a in mime_types.types:
-        if content_type in a:
-            return a[1]
+    for file_types in mime_types.MIME_TYPES:
+        if content_type in file_types:
+            return file_types[1]
+    # TODO: To fix this else I think I just need to remove else and un-indent
+    # the return bool(0) to the same indent level as the for statement.
+    # This needs to be tested.
     else:
         return bool(0)
 
 
 def save_path(filename):
     """
-    Generates a full path to download the file to.
+    Generate a full path to download the file to.
 
     :param filename: The file filename.
-    :type  filename: String
+    :type  filename: string
 
     :returns: Full path with filename.
-    :rtype:   String
+    :rtype:   string
     """
     img = filename.endswith(".png")
     mov = filename.endswith(".mov")
@@ -76,10 +89,10 @@ def get_file_type(filename):
     Get file type from filename.
 
     :param filename: The filename
-    :type  filename: String
+    :type  filename: string
 
     :returns: file_type|folder_id
-    :rtype:   String|String
+    :rtype:   string|string
     """
     img = filename.endswith(".png")
     mov = filename.endswith(".mov")

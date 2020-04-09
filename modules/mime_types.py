@@ -1,4 +1,13 @@
-types = [
+#!/usr/bin/env python3
+# -*- coding: UTF-8 -*-
+"""
+Mime-type module.
+
+A list of mime-types and their file extensions.
+"""
+
+
+MIME_TYPES = [
     ["application/epub+zip", ".epub"],
     ["application/excel", ".xls"],
     ["application/gnutar", ".tgz"],
@@ -23,11 +32,11 @@ types = [
     ["application/vnd.oasis.opendocument.spreadsheet", ".ods"],
     ["application/vnd.oasis.opendocument.text", ".odt"],
     ["application/vnd.openxmlformats-officedocument.presentationml.presentation",
-        ".pptx"],
+     ".pptx"],
     ["application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        ".xlsx"],
+     ".xlsx"],
     ["application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-        ".docx"],
+     ".docx"],
     ["application/vnd.rar", ".rar"],
     ["application/vnd.visio", ".vsd"],
     ["application/x-7z-compressed", ".7z"],
