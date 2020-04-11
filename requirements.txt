@@ -1,7 +1,7 @@
+gunicorn
 datetime
-math
-random
 requests
-sqlite3
-string
-time
+google-api-python-client
+google-auth-httplib2
+google-auth-oauthlib
+setuptools==40.3.0
