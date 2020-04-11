@@ -38,18 +38,5 @@
         "sort-packages": true
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
-    "scripts": {
-      "compile": [
-        "rm -rf .github/",
-        "rm database/create.sql",
-        "rm .gitignore composer.json composer.lock Procfile README.md"
-      ],
-      "post-install-cmd": [
-          "rm -rf .github/",
-          "rm database/create.sql",
-          "rm .gitignore composer.json composer.lock Procfile README.md",
-          "/usr/bin/rsync -a --progress ./ htdocs --exclude htdocs"
-      ]
-    }
+    "prefer-stable": true
 }

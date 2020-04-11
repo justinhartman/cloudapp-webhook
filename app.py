@@ -10,8 +10,8 @@ sys.path.append('./modules')
 """
 General.
 """
-APP_HOME = '/srv/data/web/vhosts/cloudapp.hartman.me/htdocs/'
-# APP_HOME = './'
+# APP_HOME = '/srv/data/web/vhosts/cloudapp.hartman.me/htdocs/'
+APP_HOME = './'
 GOOGLE_CREDENTIALS = APP_HOME + 'credentials.json'
 """
 Python Packages.
