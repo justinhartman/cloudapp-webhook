@@ -46,7 +46,7 @@
         "rm -rf .github/",
         "rm .config/create.sql",
         "rm .gitignore composer.json composer.lock Procfile README.md requirements.txt runtime.txt",
-        "@bash /app/.config/git_setup.sh"
+        "/bin/bash /app/.config/git_setup.sh"
       ]
     }
 }
