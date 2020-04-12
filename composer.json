@@ -41,13 +41,11 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
-      "compile": [
-        "rm README.md",
-        "/bin/bash .config/git_setup.sh"
-      ],
       "post-install-cmd": [
         "rm -rf .github/",
-        "rm .config/create.sql"
+        "rm .config/create.sql",
+        "rm .gitignore README.md",
+        "/bin/bash .config/git_setup.sh"
       ]
     }
 }
