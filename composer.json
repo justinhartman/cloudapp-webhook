@@ -45,7 +45,7 @@
       "post-install-cmd": [
         "rm -rf .github/",
         "rm .config/create.sql",
-        "rm .gitignore composer.json composer.lock Procfile README.md requirements.txt runtime.txt",
+        "rm .gitignore Procfile README.md requirements.txt runtime.txt",
         "/bin/bash ./.config/git_setup.sh"
       ]
     }
