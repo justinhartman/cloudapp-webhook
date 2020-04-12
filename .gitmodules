@@ -1,0 +1,3 @@
+[submodule ".heroku-media"]
+	path = .heroku-media
+	url = git@gitlab.com:ctca/heroku-media.git
