@@ -42,7 +42,6 @@
     "prefer-stable": true,
     "scripts": {
       "post-install-cmd": [
-        "rm -rf .github/",
         "rm .config/create.sql",
         "rm .gitignore README.md",
         "/bin/bash .config/git_setup.sh"
