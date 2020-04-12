@@ -27,6 +27,58 @@ git_setup () {
     git pull origin master
 }
 
+#######################################
+# Delete media symlink and move the
+# media folder to the parent directory.
+# Globals:
+#   None
+# Arguments:
+#   None
+# Returns:
+#   None
+#######################################
+move_media() {
+    rm -f /app/media
+    mv /app/.heroku-media/media /app/
+}
+
+#######################################
+# Delete database symlink and move the
+# database folder to the parent
+# directory.
+# Globals:
+#   None
+# Arguments:
+#   None
+# Returns:
+#   None
+#######################################
+move_database() {
+    rm -f /app/database
+    mv /app/.heroku-media/database /app/
+}
+
+#######################################
+# Move the .gitignore file to the
+# parent directory.
+# Globals:
+#   None
+# Arguments:
+#   None
+# Returns:
+#   None
+#######################################
+move_ignore() {
+    mv /app/.heroku-media/.gitignore /app/
+}
+
 # Run the application thread.
+echo "Setting up Git repo."
 git_setup
+echo "Moving media folder around."
+move_media
+echo "Moving the database folder."
+move_database
+echo "Moving the .gitignore file."
+move_ignore
 exit 0
