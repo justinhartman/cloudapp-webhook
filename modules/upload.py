@@ -6,9 +6,9 @@ Uploads module.
 A module containing methods for uploading files from the server to Google Drive
 using the Google Drive API.
 """
-import os
 import sys
 sys.path.append('../')
+import app
 from apiclient import discovery
 from apiclient.http import MediaFileUpload
 
@@ -23,7 +23,7 @@ def get_client():
     from google.oauth2 import service_account
 
     google_scopes = ['https://www.googleapis.com/auth/drive']
-    service_account_file = os.environ['HEROKU_GOOGLE_CREDENTIALS']
+    service_account_file = app.GOOGLE_CREDENTIALS
     credentials = service_account.Credentials.from_service_account_file(
         service_account_file, scopes=google_scopes
     )
