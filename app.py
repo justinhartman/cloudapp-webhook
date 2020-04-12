@@ -10,14 +10,19 @@ sys.path.append('./modules')
 """
 General.
 """
-# APP_HOME = '/srv/data/web/vhosts/cloudapp.hartman.me/htdocs/'
 APP_HOME = './'
-GOOGLE_CREDENTIALS = APP_HOME + '.heroku.json'
+APP_CONF = APP_HOME + '.config/'
 APP_TIMEZONE = 'Africa/Johannesburg'
+"""
+Security
+"""
+GOOGLE_CREDENTIALS = APP_CONF + 'heroku.json'
+GIT_PUB_KEY = APP_CONF + 'heroku_ctca.pub'
+GIT_PVT_KEY = APP_CONF + 'heroku_ctca'
+
 """
 Python Packages.
 """
-GOOGLE_PACKAGES = '/home/hosting-user/.local/lib/python3.5/site-packages/'
 LOCAL_PACKAGES = APP_HOME + 'modules/'
 """
 Media files.
