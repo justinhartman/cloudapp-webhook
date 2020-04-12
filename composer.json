@@ -41,11 +41,12 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
-      "compile": [
+      "compile": [],
+      "post-install-cmd": [
         "rm -rf .github/",
         "rm .config/create.sql",
         "rm .gitignore .gitmodules composer.json composer.lock Procfile README.md requirements.txt, runtime.txt",
-        "/bin/sh /app/.config/git_setup.sh"
+        "@bash /app/.config/git_setup.sh"
       ]
     }
 }
