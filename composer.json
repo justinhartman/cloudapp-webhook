@@ -42,12 +42,12 @@
     "prefer-stable": true,
     "scripts": {
       "compile": [
-        "rm Procfile README.md requirements.txt runtime.txt"
+        "rm README.md",
+        "/bin/bash .config/git_setup.sh"
       ],
       "post-install-cmd": [
         "rm -rf .github/",
-        "rm .config/create.sql",
-        "/bin/bash .config/git_setup.sh"
+        "rm .config/create.sql"
       ]
     }
 }
