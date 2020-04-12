@@ -19,6 +19,7 @@
 git_setup () {
     cd /app/ || exit
     # cp .heroku-media/.gitignore /app/
+    rm .gitignore
     git init
     git remote add origin https://"${GITLAB_USERNAME}":"${GITLAB_WRITE_REPO}"@gitlab.com/ctca/heroku-media.git
     git config --global user.name "CTCA GitLab Heroku"
