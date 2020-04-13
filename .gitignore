@@ -1,3 +1,5 @@
+# Don't track git submodules for Heroku.
+.gitmodules
 # Need to create the logs and media folders on the server but don't track files.
 /logs/*
 !/logs/.gitkeep
