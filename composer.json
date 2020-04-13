@@ -44,6 +44,7 @@
       "post-install-cmd": [
         "rm .config/create.sql",
         "rm .gitignore README.md",
+        "rm -rf .heroku-media/",
         "/bin/bash .config/git_setup.sh"
       ]
     }
