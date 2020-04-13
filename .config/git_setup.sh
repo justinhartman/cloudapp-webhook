@@ -23,37 +23,18 @@ git_setup () {
     git remote add origin https://"${GITLAB_USERNAME}":"${GITLAB_WRITE_REPO}"@gitlab.com/ctca/heroku-media.git
     git config --global user.name "CTCA GitLab Heroku"
     git config --global user.email "ctca-gitlab-heroku@hartman.me"
-}
-
-#######################################
-# Delete media and database symlinks.
-# Globals:
-#   None
-# Arguments:
-#   None
-# Returns:
-#   None
-#######################################
-remove_symlinks() {
-    echo "Removing old symlink folders..."
-    rm -f media
-    rm -f database
-}
-
-#######################################
-# Run git pull on the repo.
-# Globals:
-#   None
-# Arguments:
-#   None
-# Returns:
-#   None
-#######################################
-pull_origin() {
-    echo "Pulling the original source code..."
     git pull origin master
 }
 
+#######################################
+# Cleanup files not needed.
+# Globals:
+#   None
+# Arguments:
+#   None
+# Returns:
+#   None
+#######################################
 cleanup() {
     echo "Performing a cleanup on the server..."
     rm .config/create.sql
@@ -63,7 +44,5 @@ cleanup() {
 
 # Run the application thread.
 git_setup
-remove_symlinks
-pull_origin
 cleanup
 exit 0
