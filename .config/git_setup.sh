@@ -18,12 +18,20 @@
 #######################################
 git_setup () {
     # cd /app/ || exit
-    # cp .heroku-media/.gitignore /app/
-    rm .gitignore
+    # rm .gitignore
     git init
     git remote add origin https://"${GITLAB_USERNAME}":"${GITLAB_WRITE_REPO}"@gitlab.com/ctca/heroku-media.git
     git config --global user.name "CTCA GitLab Heroku"
     git config --global user.email "ctca-gitlab-heroku@hartman.me"
+    # git pull origin master
+}
+
+remove_symlinks() {
+    rm -f media
+    rm -f database
+}
+
+pull_origin() {
     git pull origin master
 }
 
@@ -81,4 +89,8 @@ git_setup
 # move_database
 # echo "Moving the .gitignore file."
 # move_ignore
+echo "Removing original symlink folders."
+remove_symlinks
+echo "Pulling origina source code."
+pull_origin
 exit 0
