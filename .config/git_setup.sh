@@ -57,13 +57,8 @@ pull_origin() {
 cleanup() {
     echo "Performing a cleanup on the server..."
     rm .config/create.sql
-    rm composer.json
-    rm composer.lock
     rm database/create.sql
     rm README.md
-    rm requirements.txt
-    rm runtime.txt
-    rm Procfile
 }
 
 # Run the application thread.
