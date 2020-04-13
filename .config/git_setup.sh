@@ -23,7 +23,7 @@ git_setup () {
     git remote add origin https://"${GITLAB_USERNAME}":"${GITLAB_WRITE_REPO}"@gitlab.com/ctca/heroku-media.git
     git config --global user.name "CTCA GitLab Heroku"
     git config --global user.email "ctca-gitlab-heroku@hartman.me"
-    # git pull origin master
+    git pull origin master
 }
 
 remove_symlinks() {
@@ -89,8 +89,9 @@ git_setup
 # move_database
 # echo "Moving the .gitignore file."
 # move_ignore
-echo "Removing original symlink folders."
-remove_symlinks
-echo "Pulling origina source code."
-pull_origin
+
+# echo "Removing original symlink folders."
+# remove_symlinks
+# echo "Pulling origina source code."
+# pull_origin
 exit 0
