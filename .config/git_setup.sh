@@ -38,7 +38,6 @@ git_setup () {
 cleanup() {
     echo "Performing a cleanup on the server..."
     rm .config/create.sql
-    rm database/create.sql
     rm README.md
 }
 
