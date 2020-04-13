@@ -2,8 +2,8 @@
 .gitmodules
 .heroku-media/
 # Hide the media and datanase folder from commit.
-database/
-media/
+database
+media
 # Need to create the logs folder on the server but don't track files.
 /logs/*
 !/logs/.gitkeep
