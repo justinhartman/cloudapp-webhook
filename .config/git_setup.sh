@@ -17,7 +17,7 @@
 #   None
 #######################################
 git_setup () {
-    cd /app/ || exit
+    # cd /app/ || exit
     # cp .heroku-media/.gitignore /app/
     rm .gitignore
     git init
@@ -75,10 +75,10 @@ move_ignore() {
 # Run the application thread.
 echo "Setting up Git repo."
 git_setup
-echo "Moving media folder around."
-move_media
-echo "Moving the database folder."
-move_database
-echo "Moving the .gitignore file."
-move_ignore
+# echo "Moving media folder around."
+# move_media
+# echo "Moving the database folder."
+# move_database
+# echo "Moving the .gitignore file."
+# move_ignore
 exit 0
