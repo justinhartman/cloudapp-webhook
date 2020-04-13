@@ -1,7 +1,7 @@
 # Don't track git submodules for Heroku.
 /.gitmodules
 /.heroku-media/
-# Hide the media and datanase folder from commit.
+# Hide the media and database folder from commit.
 /database
 /media
 # Need to create the logs folder on the server but don't track files.
@@ -14,9 +14,11 @@
 # Python
 /idiot.py
 # Dev items.
-*.pyc
-__pycache__/
+/.nova
 /old/
 /pythontest/
 /GIT.md
 /modules/git.py
+# Build items
+*.pyc
+__pycache__/
