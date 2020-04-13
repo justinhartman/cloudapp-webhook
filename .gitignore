@@ -1,23 +1,16 @@
 # Don't track git submodules for Heroku.
 .gitmodules
-# Need to create the logs and media folders on the server but don't track files.
+.heroku-media/
+# Hide the media and datanase folder from commit.
+database/
+media/
+# Need to create the logs folder on the server but don't track files.
 /logs/*
 !/logs/.gitkeep
-# /media/images/*
-# !/media/images/.gitkeep
-# /media/other/*
-# !/media/other/.gitkeep
-# /media/videos/*
-# !/media/videos/.gitkeep
 # Don't track vendor.
 /vendor/
 # App specific ignores.
-credentials.json
 info.md
-# Database
-# /database/*
-# !/database/create.sql
-# !/database/database.sqlite
 # Python
 idiot.py
 # Dev items.
