@@ -8,7 +8,7 @@
 #
 
 #######################################
-# Main application method.
+# Setup the repo.
 # Globals:
 #   None
 # Arguments:
@@ -17,81 +17,58 @@
 #   None
 #######################################
 git_setup () {
-    # cd /app/ || exit
-    # rm .gitignore
+    echo "Setting up the Git repo..."
+    rm .gitignore
     git init
     git remote add origin https://"${GITLAB_USERNAME}":"${GITLAB_WRITE_REPO}"@gitlab.com/ctca/heroku-media.git
     git config --global user.name "CTCA GitLab Heroku"
     git config --global user.email "ctca-gitlab-heroku@hartman.me"
-    git pull origin master
 }
 
+#######################################
+# Delete media and database symlinks.
+# Globals:
+#   None
+# Arguments:
+#   None
+# Returns:
+#   None
+#######################################
 remove_symlinks() {
+    echo "Removing old symlink folders..."
     rm -f media
     rm -f database
 }
 
+#######################################
+# Run git pull on the repo.
+# Globals:
+#   None
+# Arguments:
+#   None
+# Returns:
+#   None
+#######################################
 pull_origin() {
+    echo "Pulling the original source code..."
     git pull origin master
 }
 
-#######################################
-# Delete media symlink and move the
-# media folder to the parent directory.
-# Globals:
-#   None
-# Arguments:
-#   None
-# Returns:
-#   None
-#######################################
-move_media() {
-    rm -f /app/media
-    mv /app/.heroku-media/media /app/
-}
-
-#######################################
-# Delete database symlink and move the
-# database folder to the parent
-# directory.
-# Globals:
-#   None
-# Arguments:
-#   None
-# Returns:
-#   None
-#######################################
-move_database() {
-    rm -f /app/database
-    mv /app/.heroku-media/database /app/
-}
-
-#######################################
-# Move the .gitignore file to the
-# parent directory.
-# Globals:
-#   None
-# Arguments:
-#   None
-# Returns:
-#   None
-#######################################
-move_ignore() {
-    mv /app/.heroku-media/.gitignore /app/
+cleanup() {
+    echo "Performing a cleanup on the server..."
+    rm .config/create.sql
+    rm composer.json
+    rm composer.lock
+    rm database/create.sql
+    rm README.md
+    rm requirements.txt
+    rm runtime.txt
+    rm Procfile
 }
 
 # Run the application thread.
-echo "Setting up Git repo."
 git_setup
-# echo "Moving media folder around."
-# move_media
-# echo "Moving the database folder."
-# move_database
-# echo "Moving the .gitignore file."
-# move_ignore
-
-# echo "Removing original symlink folders."
-# remove_symlinks
-# echo "Pulling origina source code."
-# pull_origin
+remove_symlinks
+pull_origin
+cleanup
 exit 0
