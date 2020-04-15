@@ -6,8 +6,8 @@ Downloads module.
 A module containing methods for downloading files from CloudApp to the server.
 """
 import requests
-import media
-import utility
+from media import save_path
+from utility import Utility
 
 
 def download_file(name, url):
@@ -22,7 +22,8 @@ def download_file(name, url):
     :returns: file_status|file_size
     :rtype:   integer|string
     """
-    path = media.save_path(name)
+    utl = Utility()
+    path = save_path(name)
     file = requests.get(url, allow_redirects=True)
 
     # Get the file status.
@@ -32,14 +33,14 @@ def download_file(name, url):
         file_size = '0'
     elif file_status in (200, 302):
         length = float(file.headers['Content-Length'])
-        file_size = utility.convert_size(length)
+        file_size = utl.convert_size(length)
 
         # Save the file in chunks.
         with open(path, 'wb') as chunks:
             for chunk in file.iter_content(chunk_size=128):
                 chunks.write(chunk)
 
-        print(utility.date_time(2) + " Downloaded " + file_size)
+        print(utl.date_time(2) + " Downloaded " + file_size)
     else:
         file_status = 0
         file_size = '0'

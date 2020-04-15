@@ -8,7 +8,7 @@ using the Google Drive API.
 """
 import sys
 sys.path.append('../')
-import app
+from app import GOOGLE_CREDENTIALS
 from apiclient import discovery
 from apiclient.http import MediaFileUpload
 
@@ -23,7 +23,7 @@ def get_client():
     from google.oauth2 import service_account
 
     google_scopes = ['https://www.googleapis.com/auth/drive']
-    service_account_file = app.GOOGLE_CREDENTIALS
+    service_account_file = GOOGLE_CREDENTIALS
     credentials = service_account.Credentials.from_service_account_file(
         service_account_file, scopes=google_scopes
     )
