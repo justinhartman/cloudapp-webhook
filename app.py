@@ -10,15 +10,14 @@ sys.path.append('./modules')
 """
 General.
 """
-APP_HOME = '/app/'
+APP_HOME = './'
+# APP_HOME = '/app/'
 APP_CONF = APP_HOME + '.config/'
 APP_TIMEZONE = 'Africa/Johannesburg'
 """
 Security
 """
 GOOGLE_CREDENTIALS = APP_CONF + 'heroku.json'
-GIT_PUB_KEY = APP_CONF + 'heroku_ctca.pub'
-GIT_PVT_KEY = APP_CONF + 'heroku_ctca'
 
 """
 Python Packages.
