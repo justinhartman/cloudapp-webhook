@@ -1,7 +1,7 @@
 # Creative Academy CloudApp/Drive Webhook
 
 This project creates a webhook for [CloudApp][cloudapp] to upload video and
-images to the [Creative Academy][ctca] Google Drive API.
+images to the [Creative Academy][ctca] Google Drive API. 
 
 ## License
 
