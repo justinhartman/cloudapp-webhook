@@ -57,32 +57,42 @@ def main():
             # Save the new filename in the database.
             con.update_filename(new_name, item_id)
             name = new_name
+        
+        """
+        Check status, file size and link of the media url.
+        """
+        utl.timestamp_message("Checking media details for  \"" + name + "\"")
+        # status, size = downloads.check_status(download_url)
+        download, status, size = utl.media(download_url)
 
         """
-        Download the file to server.
+        Update database if successful.
         """
-        utl.timestamp_message("Downloading \"" + name + "\"")
-        status, size = downloads.download_file(name, download_url)
-        utl.timestamp_message(str(status)+": "+name+" ("+link+")")
-
-        """
-        Update database if successfull.
-        """
-        if status == 200:
+        if status in (200, 302):
+            # Download the file to server.
+            utl.timestamp_message("Downloading \"" + name + "\"")
+            downloads.aria_download(name, download)
+            utl.timestamp_message(str(status)+": "+name+" ("+link+")")
+            
+            # Insert downloaded file to downloads table.
             rid = con.insert_record(item_id, size, status)
             utl.timestamp_message(str(rid)+" inserted in downloads.")
+            
+            # Update payload table.
             con.update_record(1, item_id)
             utl.timestamp_message("Updated ID " + str(item_id))
 
-            # Make conection to Google Drive API.
-            credentials = upload.get_client()
-            # Upload file to API.
+            # Make connection to Google Drive API.
+            # credentials = upload.get_client()
+            
+            # Upload file to drive.
             utl.timestamp_message("Uploading to Google Drive.")
             # file_id, file_name = upload.upload_media(credentials, name)
             file_name = rclone.upload_gdrive(name)
-            # Insert Upload into DB.
+            
+            # Insert Upload into uploads table.
             # con.insert_upload(rid, file_id, file_name)
-            con.insert_upload(rid, "", file_name)
+            con.insert_upload(rid, item_id, file_name)
             utl.timestamp_message(file_name+" inserted in uploads.")
         elif status == 404:
             con.update_record(2, item_id)
