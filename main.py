@@ -10,6 +10,7 @@ import time
 import app
 from db import Db
 import downloads
+import git
 import media
 import rclone
 from utility import Utility
@@ -93,7 +94,8 @@ def main():
         else:
             utl.timestamp_message("Unknown Error. Status: " + str(status))
     else:
-        utl.timestamp_message("Closing the database connection.")
+        utl.timestamp_message("Updating the Git repository.")
+        git.commit_db()
 
     completed = time.time()
     utl.timestamp_tail(completed, started)
