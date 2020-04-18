@@ -41,7 +41,7 @@ def main():
         """
         if utl.check_path(app.MEDIA_PATH) is False:
             utl.timestamp_message("ERROR: Media folder not valid.")
-            return bool(0)
+            return False
 
         """
         If no name is set, build a name and check the filetype.
@@ -61,12 +61,12 @@ def main():
         Check status, file size and link of the media url.
         """
         utl.timestamp_message("Checking media details for  \"" + name + "\"")
-        download, status, size = utl.media(download_url)
+        status, size, download = utl.media(download_url)
 
         """
-        Update database if successful.
+        Download file, Update database and Upload to Drive if successful.
         """
-        if status in (200, 302):
+        if status == 200:
             # Download the file to server.
             utl.timestamp_message("Downloading \"" + name + "\"")
             downloads.aria_download(name, download)
@@ -78,7 +78,7 @@ def main():
 
             # Update payload table.
             con.update_record(1, item_id)
-            utl.timestamp_message("Updated ID " + str(item_id))
+            utl.timestamp_message("Updated ID: " + str(item_id))
 
             # Upload file to drive.
             utl.timestamp_message("Uploading to Google Drive.")
@@ -91,15 +91,14 @@ def main():
             con.update_record(2, item_id)
             utl.timestamp_message("404 file not found.")
         else:
-            print(utl.date_time(2) + " General error")
-            utl.timestamp_message("General Unknown Error.")
+            utl.timestamp_message("Unknown Error. Status: " + str(status))
     else:
         utl.timestamp_message("Closing the database connection.")
 
     completed = time.time()
     utl.timestamp_tail(completed, started)
 
-    return bool(1)
+    return True
 
 
 if __name__ == '__main__':

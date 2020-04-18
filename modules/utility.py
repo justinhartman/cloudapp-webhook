@@ -92,11 +92,9 @@ class Utility:
         :returns: Multiple information lines.
         :rtype:   string
         """
-        head = '===============================================================\
-================='
+        head = '================================================================================'
         subj = "CloudApp/Google Drive Python Script Log"
-        line = '---------------------------------------------------------------\
------------------'
+        line = '--------------------------------------------------------------------------------'
         build = print(head), print(subj), print(line)
 
         return build
@@ -132,11 +130,9 @@ class Utility:
         :rtype:   string
         """
         value = Utility.time_formatter(self, end, start)
-        head = '===============================================================\
-================='
+        head = '================================================================================'
         subj = "Script took %d min %d seconds to run." % (value[2], value[3])
-        line = '---------------------------------------------------------------\
------------------'
+        line = '--------------------------------------------------------------------------------'
         build = print(line), print(subj), print(head)
         # build = head, subj, line
         # message = print(build)
@@ -202,24 +198,21 @@ class Utility:
         :param url:  The url to the CloudApp file.
         :type  url:  string
 
-        :returns: file_link|file_status|file_size
-        :rtype:   string|integer|string
+        :returns: file_status|file_size|file_link
+        :rtype:   integer|string|string
         """
         media = requests.head(url)
-        # Get URL to downloadable media file.
-        file_link = media.headers['location']
-
         file = requests.head(url, allow_redirects=True)
+
         # Get the file status.
         file_status = file.status_code
 
-        if file_status == 404:
-            file_size = '0'
-        elif file_status in (200, 302):
-            length = float(file.headers['Content-Length'])
-            file_size = Utility.convert_size(self, length)
+        # Make sure the file is valid.
+        if file_status == 200:
+            file_link = media.headers['location']
+            file_size = file.headers['Content-Length']
         else:
-            file_status = 0
-            file_size = '0'
+            file_link = False
+            file_size = False
 
-        return file_link, file_status, file_size
+        return file_status, file_size, file_link
