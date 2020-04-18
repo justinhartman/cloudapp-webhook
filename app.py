@@ -10,8 +10,8 @@ sys.path.append('./modules')
 """
 General.
 """
-APP_HOME = './'
-# APP_HOME = '/app/'
+# APP_HOME = './'
+APP_HOME = '/app/'
 APP_CONF = APP_HOME + '.config/'
 APP_TIMEZONE = 'Africa/Johannesburg'
 """
