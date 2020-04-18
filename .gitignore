@@ -18,7 +18,6 @@
 /old/
 /pythontest/
 /GIT.md
-/modules/git.py
 # Build items
 *.pyc
 __pycache__/

@@ -216,3 +216,23 @@ class Utility:
             file_size = False
 
         return file_status, file_size, file_link
+
+
+    def sub_process(self, command):
+        """
+        Runs commands using Python subprocess module.
+
+        :param command:  The command to execute.
+        :type  command:  array
+
+        :returns: Results|Exception
+        :rtype:   mixed|boolean
+        """
+        try:
+            subprocess.run(
+                command,
+                check=True,
+                text=True
+            )
+        except:
+            return False
