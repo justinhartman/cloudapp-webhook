@@ -9,14 +9,15 @@ from utility import Utility
 
 
 def commit_db():
+    utl = Utility()
     add = ['git', 'add', 'database/database.sqlite']
-    process_add = Utility.sub_process(add)
+    process_add = utl.sub_process(add)
 
     message = str('Automated Commit: Updated database.')
     commit = ['git', 'commit', '-am', message]
-    process_com = Utility.sub_process(commit)
+    process_com = utl.sub_process(commit)
 
     push = ['git', 'push', '-u', 'origin', 'master']
-    process_psh = Utility.sub_process(push)
+    process_psh = utl.sub_process(push)
 
     return process_add, process_com, process_psh
