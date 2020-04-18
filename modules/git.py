@@ -5,7 +5,6 @@ Git module.
 
 A module to store uploaded media and edited SQLite databases to GitLab.
 """
-import subprocess
 from utility import Utility
 
 
