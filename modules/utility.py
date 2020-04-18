@@ -217,7 +217,7 @@ class Utility:
             file_size = '0'
         elif file_status in (200, 302):
             length = float(file.headers['Content-Length'])
-            file_size = convert_size(length)
+            file_size = Utility.convert_size(length)
         else:
             file_status = 0
             file_size = '0'
