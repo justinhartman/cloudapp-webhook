@@ -112,3 +112,33 @@ def get_file_type(filename):
         folder_id = app.DRIVE_OTHER_FOLDER
 
     return file_type, folder_id
+
+
+def rclone_file_type(filename):
+    """
+    Get file type from filename.
+
+    :param filename: The filename
+    :type  filename: string
+
+    :returns: file_type|folder_id
+    :rtype:   string|string
+    """
+    img = filename.endswith(".png")
+    mov = filename.endswith(".mov")
+    mp4 = filename.endswith(".mp4")
+
+    if img:
+        src_path = app.MEDIA_IMAGE + filename
+        drv_path = app.RCLONE_GDRIVE_IMAGE
+    elif mov:
+        src_path = app.MEDIA_VIDEO + filename
+        drv_path = app.RCLONE_GDRIVE_VIDEO
+    elif mp4:
+        src_path = app.MEDIA_VIDEO + filename
+        drv_path = app.RCLONE_GDRIVE_VIDEO
+    else:
+        src_path = app.MEDIA_OTHER + filename
+        drv_path = app.RCLONE_GDRIVE_OTHER
+
+    return src_path, drv_path
