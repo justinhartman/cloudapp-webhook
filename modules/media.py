@@ -55,7 +55,7 @@ def get_extension(url):
     # the return bool(0) to the same indent level as the for statement.
     # This needs to be tested.
     else:
-        return bool(0)
+        return False
 
 
 def save_path(filename):

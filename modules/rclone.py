@@ -32,4 +32,4 @@ def upload_gdrive(filename):
 
 def upload_gandi(filename):
     # Code here
-    return bool(1)
+    return True
