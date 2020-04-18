@@ -58,9 +58,9 @@ def get_extension(url):
         return bool(0)
 
 
-def aria_save_path(filename):
+def save_path(filename):
     """
-    Generate a path to download the file to.
+    Generate a path to download the file to in downloads module.
 
     :param filename: The file filename.
     :type  filename: string
@@ -84,71 +84,15 @@ def aria_save_path(filename):
     return path
 
 
-def save_path(filename):
+def file_paths(filename):
     """
-    Generate a full path to download the file to.
+    Get local path and remote path from filename for rclone module.
 
-    :param filename: The file filename.
+    :param filename: The filename
     :type  filename: string
 
-    :returns: Full path with filename.
+    :returns: Mixed variables.
     :rtype:   string
-    """
-    img = filename.endswith(".png")
-    mov = filename.endswith(".mov")
-    mp4 = filename.endswith(".mp4")
-
-    if img:
-        full_path = app.MEDIA_IMAGE + filename
-    elif mov:
-        full_path = app.MEDIA_VIDEO + filename
-    elif mp4:
-        full_path = app.MEDIA_VIDEO + filename
-    else:
-        full_path = app.MEDIA_OTHER + filename
-
-    return full_path
-
-
-def get_file_type(filename):
-    """
-    Get file type from filename.
-
-    :param filename: The filename
-    :type  filename: string
-
-    :returns: file_type|folder_id
-    :rtype:   string|string
-    """
-    img = filename.endswith(".png")
-    mov = filename.endswith(".mov")
-    mp4 = filename.endswith(".mp4")
-
-    if img:
-        file_type = "image/png"
-        folder_id = app.DRIVE_IMAGE_FOLDER
-    elif mov:
-        file_type = "video/quicktime"
-        folder_id = app.DRIVE_VIDEO_FOLDER
-    elif mp4:
-        file_type = "video/mp4"
-        folder_id = app.DRIVE_VIDEO_FOLDER
-    else:
-        file_type = "application/octet-stream"
-        folder_id = app.DRIVE_OTHER_FOLDER
-
-    return file_type, folder_id
-
-
-def rclone_file_type(filename):
-    """
-    Get file type from filename.
-
-    :param filename: The filename
-    :type  filename: string
-
-    :returns: file_type|folder_id
-    :rtype:   string|string
     """
     img = filename.endswith(".png")
     mov = filename.endswith(".mov")
