@@ -58,6 +58,32 @@ def get_extension(url):
         return bool(0)
 
 
+def aria_save_path(filename):
+    """
+    Generate a path to download the file to.
+
+    :param filename: The file filename.
+    :type  filename: string
+
+    :returns: Full path.
+    :rtype:   string
+    """
+    img = filename.endswith(".png")
+    mov = filename.endswith(".mov")
+    mp4 = filename.endswith(".mp4")
+
+    if img:
+        path = app.MEDIA_IMAGE
+    elif mov:
+        path = app.MEDIA_VIDEO
+    elif mp4:
+        path = app.MEDIA_VIDEO
+    else:
+        path = app.MEDIA_OTHER
+
+    return path
+
+
 def save_path(filename):
     """
     Generate a full path to download the file to.
