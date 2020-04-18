@@ -22,3 +22,5 @@
 # Build items
 *.pyc
 __pycache__/
+/.config/gandi_server
+/.config/gandi_server.pub
