@@ -4,11 +4,20 @@
 Rclone module.
 """
 import subprocess
-from media import rclone_file_type
+from media import file_paths
 
 
 def upload_gdrive(filename):
-    src_path, dst = rclone_file_type(filename)
+    """
+    Upload media to Google Drive using rclone.
+
+    :param filename:    The filename of the upload.
+    :type  filename:    string
+
+    :returns: Name of file.
+    :rtype:   string
+    """
+    src_path, dst = file_paths(filename)
     src = 'local:' + src_path
 
     command = ['rclone', 'copy', '-P', src, dst]
