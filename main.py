@@ -11,6 +11,7 @@ import app
 from db import Db
 import downloads
 import media
+import rclone
 import upload
 from utility import Utility
 
@@ -77,10 +78,12 @@ def main():
             credentials = upload.get_client()
             # Upload file to API.
             utl.timestamp_message("Uploading to Google Drive.")
-            file_id, file_name = upload.upload_media(credentials, name)
+            # file_id, file_name = upload.upload_media(credentials, name)
+            file_name = rclone.upload_gdrive(name)
             # Insert Upload into DB.
-            con.insert_upload(rid, file_id, file_name)
-            utl.timestamp_message(file_id+" inserted in uploads.")
+            # con.insert_upload(rid, file_id, file_name)
+            con.insert_upload(rid, "", file_name)
+            utl.timestamp_message(file_name+" inserted in uploads.")
         elif status == 404:
             con.update_record(2, item_id)
             utl.timestamp_message("404 file not found.")
