@@ -191,3 +191,34 @@ class Utility:
         seconds = time_float
     
         return day, hour, minutes, seconds
+
+
+def media(url):
+    """
+    Checks the status and size of a file and gets the full download path to 
+    the media file.
+
+    :param url:  The url to the CloudApp file.
+    :type  url:  string
+
+    :returns: file_link|file_status|file_size
+    :rtype:   string|integer|string
+    """
+    media = requests.head(url)
+    # Get URL to downloadable media file.
+    file_link = media.headers['location']
+
+    file = requests.head(url, allow_redirects=True)
+    # Get the file status.
+    file_status = file.status_code
+
+    if file_status == 404:
+        file_size = '0'
+    elif file_status in (200, 302):
+        length = float(file.headers['Content-Length'])
+        file_size = convert_size(length)
+    else:
+        file_status = 0
+        file_size = '0'
+
+    return file_link, file_status, file_size
