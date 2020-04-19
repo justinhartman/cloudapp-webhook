@@ -19,7 +19,7 @@
 #######################################
 commit_db () {
     git add database logs
-    git commit -m "Automated: Cronjob commit."
+    git commit -am "Automated: Cronjob commit."
     git push -u origin master
 
     return
