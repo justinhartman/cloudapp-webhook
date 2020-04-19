@@ -3,7 +3,7 @@
 """
 Git module.
 
-A module to store uploaded media and edited SQLite databases to GitLab.
+A module to store uploaded media and edited SQLite databases to GitHub.
 """
 from utility import Utility
 
