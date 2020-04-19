@@ -13,7 +13,7 @@ def commit_db():
     add = ['git', 'add', '*']
     process_add = utl.sub_process(add)
 
-    message = str('Automated: Python DB and Logs.')
+    message = str('Automated: Python commit.')
     commit = ['git', 'commit', '-m', message]
     process_com = utl.sub_process(commit)
 
