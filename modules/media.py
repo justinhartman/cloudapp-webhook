@@ -9,8 +9,8 @@ A module containing methods for working with media. These include methods for:
 - Define the save path for media files.
 - Define the folder to upload media files to.
 """
-import sys
 import requests
+import sys
 sys.path.append('../')
 import app
 import mime_types

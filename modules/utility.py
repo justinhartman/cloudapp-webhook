@@ -5,14 +5,15 @@ Utility module.
 
 A module containing various utility methods used in the application.
 """
-from datetime import datetime, timedelta
 import math
 import os.path
 import random
-import requests
 import string
 import subprocess
 import time
+from datetime import datetime, timedelta
+
+import requests
 
 
 class Utility:
@@ -29,7 +30,6 @@ class Utility:
         check = os.path.exists(path)
 
         return check
-
 
     def convert_size(self, size_bytes):
         """
@@ -51,12 +51,11 @@ class Utility:
 
         return "%s %s" % (size_c, size_name[size_a])
 
-
     def date_time(self, offset=0):
         """
         Return a formatted current date and time.
 
-        :param offset: An offset to accommodate for any server time differences.
+        :param offset: An offset to accommodate for any server time differences
                        Defaults to zero if no param set.
         :type  offset: integer
 
@@ -67,7 +66,6 @@ class Utility:
         formatted = today.strftime('%F %T')
 
         return formatted
-
 
     def random_string(self, size=32):
         """
@@ -85,7 +83,6 @@ class Utility:
 
         return joined
 
-
     def timestamp_top(self):
         """
         Return a header for the log file.
@@ -99,7 +96,6 @@ class Utility:
         build = print(head), print(subj), print(line)
 
         return build
-
 
     def timestamp_message(self, message):
         """
@@ -116,7 +112,6 @@ class Utility:
         message = print(build)
 
         return message
-
 
     def timestamp_tail(self, end, start):
         """
@@ -140,7 +135,6 @@ class Utility:
 
         return build
 
-
     def time_to_seconds(self, datetime_string):
         """
         Convert a datetime string to a float for converting.
@@ -161,10 +155,9 @@ class Utility:
 
         return timestamp
 
-
     def time_formatter(self, older, newer):
         """
-        Convert two time floats from seconds into day, hour, minute and seconds.
+        Convert two time floats from seconds into day, hour, minute and seconds
 
         :param older: The older time.
         :type  older: float
@@ -189,7 +182,6 @@ class Utility:
         seconds = time_float
 
         return day, hour, minutes, seconds
-
 
     def media(self, url):
         """
@@ -217,7 +209,6 @@ class Utility:
             file_size = False
 
         return file_status, file_size, file_link
-
 
     def sub_process(self, command):
         """
