@@ -10,7 +10,7 @@ from utility import Utility
 
 def commit_db():
     utl = Utility()
-    add = ['git', 'add', '*']
+    add = ['git', 'add', 'database', 'logs']
     process_add = utl.sub_process(add)
 
     message = str('Automated: Python commit.')
