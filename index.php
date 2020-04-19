@@ -115,8 +115,8 @@ function sendMail(object $logger, string $subject, string $body)
 function gitCommit(object $logger)
 {
     try {
+        $log = $logger->info('Running ./bin/webhook.sh to commit files.');
         shell_exec('/bin/bash /app/bin/webhook.sh');
-        $log = $logger->info('Committed Database to Git Repo.');
     } catch (Exception $e) {
         $log = $logger->error(sprintf('Git Commit Error: %s', $e->getMessage()));
     }
