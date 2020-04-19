@@ -6,9 +6,11 @@ Database module.
 This module creates a database connection and contains a series of queries for
 use in the application.
 """
-from app import DATABASE_PATH
 import sqlite3
 from sqlite3 import Error
+
+from app import DATABASE_PATH
+
 
 class Db:
     def create_connection():
