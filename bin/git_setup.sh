@@ -25,7 +25,8 @@ git_setup () {
     git lfs track "*.mp4"
     git config --global user.name "Automated GitHub User"
     git config --global user.email "j.hartman@ctca.co.za"
-    git pull origin master
+    git pull -f origin master
+    git fetch --tags
 }
 
 #######################################
