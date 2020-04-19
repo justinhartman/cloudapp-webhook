@@ -14,7 +14,7 @@ def commit_db():
     process_add = utl.sub_process(add)
 
     message = str('Automated: Python commit.')
-    commit = ['git', 'commit', '-m', message]
+    commit = ['git', 'commit', '-am', message]
     process_com = utl.sub_process(commit)
 
     push = ['git', 'push', '-u', 'origin', 'master']
