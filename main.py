@@ -8,11 +8,11 @@ CloudApp and then uploading them to Google Drive using the Google Drive API.
 """
 import time
 import app
-from db import Db
 import downloads
 import git
 import media
 import rclone
+from db import Db
 from utility import Utility
 
 

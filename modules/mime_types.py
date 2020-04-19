@@ -5,8 +5,6 @@ Mime-type module.
 
 A list of mime-types and their file extensions.
 """
-
-
 MIME_TYPES = [
     ["application/epub+zip", ".epub"],
     ["application/excel", ".xls"],

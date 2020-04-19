@@ -5,10 +5,9 @@ Downloads module.
 
 A module containing methods for downloading files from CloudApp to the server.
 """
-import requests
 import subprocess
+
 from media import save_path
-from utility import Utility
 
 
 def aria_download(name, url):
