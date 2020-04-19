@@ -17,8 +17,8 @@
 #   None
 #######################################
 commit_db () {
-    git add /app/database/database.sqlite
-    git commit -m "Automated: New webhook payload added to DB."
+    # git add /app/database/database.sqlite
+    git commit -am "Automated: PHP Webhook DB and Logs."
     git push -u origin master
 
     return
