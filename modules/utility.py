@@ -5,188 +5,226 @@ Utility module.
 
 A module containing various utility methods used in the application.
 """
-from datetime import datetime, timedelta
 import math
 import os.path
 import random
 import string
+import subprocess
 import time
+from datetime import datetime, timedelta
+
+import requests
 
 
-def check_path(path):
-    """
-    Check the path to the media folder exists.
+class Utility:
+    def check_path(self, path):
+        """
+        Check the path to the media folder exists.
 
-    :param path: Path to check.
-    :type  path: string
+        :param path: Path to check.
+        :type  path: string
 
-    :returns: True or false.
-    :rtype:   boolean
-    """
-    check = os.path.exists(path)
+        :returns: True or false.
+        :rtype:   boolean
+        """
+        check = os.path.exists(path)
 
-    return check
+        return check
 
+    def convert_size(self, size_bytes):
+        """
+        Convert bytes into human readable format.
 
-def convert_size(size_bytes):
-    """
-    Convert bytes into human readable format.
+        :param size_bytes: The size in bytes.
+        :type  size_bytes: integer
 
-    :param size_bytes: The size in bytes.
-    :type  size_bytes: integer
+        :returns: Human readable format.
+        :rtype:   string
+        """
+        if size_bytes == 0:
+            return "0B"
 
-    :returns: Human readable format.
-    :rtype:   string
-    """
-    if size_bytes == 0:
-        return "0B"
+        size_name = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
+        size_a = int(math.floor(math.log(size_bytes, 1024)))
+        size_b = math.pow(1024, size_a)
+        size_c = round(size_bytes / size_b, 2)
 
-    size_name = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
-    size_a = int(math.floor(math.log(size_bytes, 1024)))
-    size_b = math.pow(1024, size_a)
-    size_c = round(size_bytes / size_b, 2)
+        return "%s %s" % (size_c, size_name[size_a])
 
-    return "%s %s" % (size_c, size_name[size_a])
+    def date_time(self, offset=0):
+        """
+        Return a formatted current date and time.
 
+        :param offset: An offset to accommodate for any server time differences
+                       Defaults to zero if no param set.
+        :type  offset: integer
 
-def date_time(offset=0):
-    """
-    Return a formatted current date and time.
+        :returns: Date formatted like 2020-04-08 09:25:07.
+        :rtype:   string
+        """
+        today = datetime.now() + timedelta(hours=offset)
+        formatted = today.strftime('%F %T')
 
-    :param offset: An offset to accommodate for any server time differences.
-                   Defaults to zero if no param set.
-    :type  offset: integer
+        return formatted
 
-    :returns: Date formatted like 2020-04-08 09:25:07.
-    :rtype:   string
-    """
-    today = datetime.now() + timedelta(hours=offset)
-    formatted = today.strftime('%F %T')
+    def random_string(self, size=32):
+        """
+        Generate a random string.
 
-    return formatted
+        :param   size: The length of the string to create.
+        :type    size: number
+        :default size: 32
 
+        :returns: Random string
+        :rtype:   string
+        """
+        chars = string.ascii_letters + string.digits
+        joined = ''.join(random.choice(chars) for x in range(size))
 
-def random_string(size=32):
-    """
-    Generate a random string.
+        return joined
 
-    :param   size: The length of the string to create.
-    :type    size: number
-    :default size: 32
+    def timestamp_top(self):
+        """
+        Return a header for the log file.
 
-    :returns: Random string
-    :rtype:   string
-    """
-    chars = string.ascii_letters + string.digits
-    joined = ''.join(random.choice(chars) for x in range(size))
+        :returns: Multiple information lines.
+        :rtype:   string
+        """
+        head = '================================================================================'
+        subj = "CloudApp/Google Drive Python Script Log"
+        line = '--------------------------------------------------------------------------------'
+        build = print(head), print(subj), print(line)
 
-    return joined
+        return build
 
+    def timestamp_message(self, message):
+        """
+        Return a formatted log file entry with date and time.
 
-def timestamp_top():
-    """
-    Return a header for the log file.
+        :param message: The message to include in the log file.
+        :type  message: object
 
-    :returns: Multiple information lines.
-    :rtype:   string
-    """
-    head = '===================================================================\
-============='
-    subj = "CloudApp/Google Drive Python Script Log"
-    line = '-------------------------------------------------------------------\
--------------'
-    build = print(head), print(subj), print(line)
+        :returns: Formatted log file message.
+        :rtype:   string
+        """
+        clean = str(message)
+        build = Utility.date_time(self, 2) + " :~$ " + clean
+        message = print(build)
 
-    return build
+        return message
 
+    def timestamp_tail(self, end, start):
+        """
+        Return a footer containing the time to run script for the log file.
 
-def timestamp_tail(end, start):
-    """
-    Return a footer containing the time to run script for the log file.
+        :param end:   The time the script ended.
+        :type  end:   object
+        :param start: The time the script started.
+        :type  start: object
 
-    :param end:   The time the script ended.
-    :type  end:   object
-    :param start: The time the script started.
-    :type  start: object
+        :returns: Multiple information lines.
+        :rtype:   string
+        """
+        value = Utility.time_formatter(self, end, start)
+        head = '================================================================================'
+        subj = "Script took %d min %d seconds to run." % (value[2], value[3])
+        line = '--------------------------------------------------------------------------------'
+        build = print(line), print(subj), print(head)
+        # build = head, subj, line
+        # message = print(build)
 
-    :returns: Multiple information lines.
-    :rtype:   string
-    """
-    value = time_formatter(end, start)
-    head = '===================================================================\
-============='
-    subj = "Script took %d min %d seconds to run." % (value[2], value[3])
-    line = '-------------------------------------------------------------------\
--------------'
-    build = print(line), print(subj), print(head)
-    # build = head, subj, line
-    # message = print(build)
+        return build
 
-    return build
+    def time_to_seconds(self, datetime_string):
+        """
+        Convert a datetime string to a float for converting.
 
+        :param datetime_string: The datetime string
+        :type  datetime_string: string
 
-def timestamp_message(message):
-    """
-    Return a formatted log file entry with date and time.
+        :returns: Seconds timestamp
+        :rtype:   float
+        """
+        element = datetime.strptime(
+            datetime_string,
+            "%Y-%m-%d %H:%M:%S"
+        )
 
-    :param message: The message to include in the log file.
-    :type  message: object
+        time_tuple = element.timetuple()
+        timestamp = time.mktime(time_tuple)
 
-    :returns: Formatted log file message.
-    :rtype:   string
-    """
-    clean = str(message)
-    build = date_time(2) + " :~$ " + clean
-    message = print(build)
+        return timestamp
 
-    return message
+    def time_formatter(self, older, newer):
+        """
+        Convert two time floats from seconds into day, hour, minute and seconds
 
+        :param older: The older time.
+        :type  older: float
+        :param newer: The newer time.
+        :type  newer: float
 
-def time_to_seconds(datetime_string):
-    """
-    Convert a datetime string to a float for converting.
+        :returns: Mixed variables for day, hour, minute and second.
+        :rtype:   float
+        """
+        diff = int(older - newer)
 
-    :param datetime_string: The datetime string
-    :type  datetime_string: string
+        time_float = float(diff)
+        day = time_float // (24 * 3600)
 
-    :returns: Seconds timestamp
-    :rtype:   float
-    """
-    element = datetime.strptime(
-        datetime_string,
-        "%Y-%m-%d %H:%M:%S"
-    )
+        time_float = time_float % (24 * 3600)
+        hour = time_float // 3600
 
-    time_tuple = element.timetuple()
-    timestamp = time.mktime(time_tuple)
+        time_float %= 3600
+        minutes = time_float // 60
 
-    return timestamp
+        time_float %= 60
+        seconds = time_float
 
+        return day, hour, minutes, seconds
 
-def time_formatter(older, newer):
-    """
-    Convert two time floats from seconds into day, hour, minute and seconds.
+    def media(self, url):
+        """
+        Checks the status and size of a file and gets the full download path to
+        the media file.
 
-    :param older: The older time.
-    :type  older: float
-    :param newer: The newer time.
-    :type  newer: float
+        :param url:  The url to the CloudApp file.
+        :type  url:  string
 
-    :returns: Mixed variables for day, hour, minute and second.
-    :rtype:   float
-    """
-    diff = int(older - newer)
+        :returns: file_status|file_size|file_link
+        :rtype:   integer|string|string
+        """
+        media = requests.head(url)
+        file = requests.head(url, allow_redirects=True)
 
-    time_float = float(diff)
-    day = time_float // (24 * 3600)
+        # Get the file status.
+        file_status = file.status_code
 
-    time_float = time_float % (24 * 3600)
-    hour = time_float // 3600
+        # Make sure the file is valid.
+        if file_status == 200:
+            file_link = media.headers['location']
+            file_size = file.headers['Content-Length']
+        else:
+            file_link = False
+            file_size = False
 
-    time_float %= 3600
-    minutes = time_float // 60
+        return file_status, file_size, file_link
 
-    time_float %= 60
-    seconds = time_float
+    def sub_process(self, command):
+        """
+        Runs commands using Python subprocess module.
 
-    return day, hour, minutes, seconds
+        :param command:  The command to execute.
+        :type  command:  array
+
+        :returns: Results|Exception
+        :rtype:   mixed|boolean
+        """
+        try:
+            subprocess.run(
+                command,
+                check=True,
+                text=True
+            )
+        except:
+            return False

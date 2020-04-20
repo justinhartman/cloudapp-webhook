@@ -18,7 +18,10 @@
     "require": {
         "php": "^7.3.0",
         "google/apiclient": "^2.0",
-        "phpmailer/phpmailer": "^6.1"
+        "phpmailer/phpmailer": "^6.1",
+        "php-amqplib/php-amqplib": "2.11.*",
+        "ext-bcmath": "*",
+        "ext-pdo_sqlite": "*"
     },
     "extra": {
       "heroku": {
@@ -40,16 +43,8 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
-      "compile": [
-        "rm -rf .github/",
-        "rm database/create.sql",
-        "rm .gitignore composer.json composer.lock Procfile README.md"
-      ],
       "post-install-cmd": [
-          "rm -rf .github/",
-          "rm database/create.sql",
-          "rm .gitignore composer.json composer.lock Procfile README.md",
-          "/usr/bin/rsync -a --progress ./ htdocs --exclude htdocs"
+        "/bin/bash bin/git_setup.sh"
       ]
     }
 }
