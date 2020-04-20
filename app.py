@@ -10,13 +10,17 @@ sys.path.append('./modules')
 """
 General.
 """
-APP_HOME = '/srv/data/web/vhosts/cloudapp.hartman.me/htdocs/'
-# APP_HOME = './'
-GOOGLE_CREDENTIALS = APP_HOME + 'credentials.json'
+APP_HOME = '/app/'
+APP_CONF = APP_HOME + '.config/'
+APP_TIMEZONE = 'Africa/Johannesburg'
+"""
+Security
+"""
+GOOGLE_CREDENTIALS = APP_CONF + 'heroku.json'
+
 """
 Python Packages.
 """
-GOOGLE_PACKAGES = '/home/hosting-user/.local/lib/python3.5/site-packages/'
 LOCAL_PACKAGES = APP_HOME + 'modules/'
 """
 Media files.
@@ -34,3 +38,9 @@ DRIVE_MEDIA_FOLDER = '0AMzDjXZ2bebtUk9PVA'
 DRIVE_IMAGE_FOLDER = '1qCEMCqW5gveSArD5k7W_1Q-FWY4mvV7S'
 DRIVE_VIDEO_FOLDER = '1DClecbZXR2LIjEeS4S9zr5PBueP7ovrx'
 DRIVE_OTHER_FOLDER = '1opGMRZej3qYVxkYSR8FCWCdfl0pG6EWR'
+"""
+Rclone Drive values.
+"""
+RCLONE_GDRIVE_IMAGE = 'gdrive:1. CloudApp Images'
+RCLONE_GDRIVE_VIDEO = 'gdrive:2. CloudApp Videos'
+RCLONE_GDRIVE_OTHER = 'gdrive:3. CloudApp Uncategorised'

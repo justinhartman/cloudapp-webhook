@@ -106,6 +106,25 @@ function sendMail(object $logger, string $subject, string $body)
 }
 
 /**
+ * Commit database to git repo.
+ *
+ * @param object $logger   The log file object.
+ *
+ * @return App\Log Log the success or error to the log file.
+ */
+function gitCommit(object $logger)
+{
+    try {
+        $log = $logger->info('Running ./bin/webhook.sh to commit files.');
+        shell_exec('/bin/bash /app/bin/webhook.sh');
+    } catch (Exception $e) {
+        $log = $logger->error(sprintf('Git Commit Error: %s', $e->getMessage()));
+    }
+
+    return $log;
+}
+
+/**
  * Setup Log file instance.
  *
  * @var App\Log
@@ -181,6 +200,8 @@ try {
         $logger->info($successMessage);
         // Send success mail.
         sendMail($logger, $mailSubSuccess, $successMessage);
+        // Commit DB to git repo.
+        gitCommit($logger);
     }
 } catch (Exception $e) {
     // Build error messages.
