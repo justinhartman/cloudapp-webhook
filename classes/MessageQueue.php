@@ -7,7 +7,7 @@
  * Run with:
  * $ampq = new MessageQueue();
  * $conn = $ampq->connection();
- * $ampq->amqpMessage($conn, 'python_queue', "Testing 1-2-3.");
+ * $ampq->amqpMessage($conn, 'app.webhook', 'direct', 'python', "Message text");
  *
  * PHP version 7.3
  *
@@ -31,26 +31,67 @@ use PhpAmqpLib\Message\AMQPMessage;
  */
 class MessageQueue
 {
+    /**
+     * CloudAMQP connection.
+     *
+     * @return \PhpAmqpLib\Connection\AMQPStreamConnection
+     */
     public function connection()
     {
-        $url = parse_url(getenv('CLOUDAMQP_URL', 'amqp://guest:guest@localhost//'));
-        $connection = new AMQPStreamConnection($url['host'], 5672, $url['user'], $url['pass'], substr($url['path'], 1));
-        $channel = $connection->channel();
+        $url = parse_url(
+            getenv(
+                'CLOUDAMQP_URL',
+                'amqp://guest:guest@localhost//'
+            )
+        );
 
-        return $channel;
+        $conn = new AMQPStreamConnection(
+            $url['host'],
+            5672,
+            $url['user'],
+            $url['pass'],
+            substr(
+                $url['path'],
+                1
+            )
+        );
+
+        return $conn;
     }
 
-    public function amqpMessage($conn, $queue, $message)
+    /**
+     * AMQP message send.
+     *
+     * @param object $conn     The CloudAMQP connection.
+     * @param string $exchange The exchange.
+     * @param string $type     The exchange type one of direct, fanout,
+     *                         headers, or topic.
+     * @param string $queue    The queue name.
+     * @param string $text     The text for the message.
+     *
+     * @return string The status and message.
+     */
+    public function amqpMessage($conn, $exchange, $type, $queue, $text)
     {
-        $conn->queue_declare($queue, false, false, false, false);
+        $channel = $conn->channel();
 
-        $msg = new AMQPMessage($message);
-        $conn->basic_publish($msg, '', $queue);
+        $channel->queue_declare($queue, true, true, true, false, false);
+        $channel->exchange_declare($exchange, $type, true, true, false, false, false);
+        $channel->queue_bind($queue, $exchange);
 
-        $conn->close();
-        $connection->close();
+        $message = new AMQPMessage(
+            $text,
+            array(
+                'content_type' => 'text/plain',
+                'delivery_mode' => 2
+            )
+        );
+        $channel->basic_publish($message, $exchange);
 
-        $status = " [x] Callback sent to AMQP Stream.\n";
+        $channel->close();
+        // $conn->close();
+
+        $status = print(" [x] '".$text."' sent to AMQP Stream.");
 
         return $status;
     }

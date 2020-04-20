@@ -28,7 +28,6 @@ class Db:
 
         return conn
 
-
     def select_all(self):
         """
         Query all rows in the payload table which have to be downloaded.
@@ -46,7 +45,6 @@ class Db:
         cur.close()
 
         return rows
-
 
     def select_items(self, limit):
         """
@@ -78,7 +76,6 @@ class Db:
 
         return items
 
-
     def select_single(self):
         """
         Query payload returning a single row.
@@ -103,7 +100,6 @@ class Db:
         cur.close()
 
         return item_id, item_name, item_link
-
 
     def insert_record(self, payload_id, file_size, file_status):
         """
@@ -132,7 +128,6 @@ class Db:
 
         return insert_id
 
-
     def insert_upload(self, download_id, drive_id, drive_name):
         """
         Insert downloaded file details in uploads table.
@@ -160,7 +155,6 @@ class Db:
 
         return insert_id
 
-
     def update_record(self, status, payload_id):
         """
         Update the downloaded column in the payload table.
@@ -183,7 +177,6 @@ class Db:
         cur.close()
 
         return bool(execute)
-
 
     def update_filename(self, name, payload_id):
         """
