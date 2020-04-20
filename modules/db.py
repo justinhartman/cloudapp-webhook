@@ -6,9 +6,11 @@ Database module.
 This module creates a database connection and contains a series of queries for
 use in the application.
 """
-from app import DATABASE_PATH
 import sqlite3
 from sqlite3 import Error
+
+from app import DATABASE_PATH
+
 
 class Db:
     def create_connection():
@@ -23,14 +25,13 @@ class Db:
             conn = sqlite3.connect(DATABASE_PATH)
         except Error as e:
             print(e)
-    
+
         return conn
-    
-    
+
     def select_all(self):
         """
         Query all rows in the payload table which have to be downloaded.
-    
+
         :returns: Array of items.
         :rtype:   array
         """
@@ -39,20 +40,19 @@ class Db:
         query = "SELECT `id`, `payload_item_name`, `payload_item_url` FROM \
                 `payload` WHERE `downloaded` = 0 AND `downloaded_at` IS NULL"
         cur.execute(query)
-    
+
         rows = cur.fetchall()
         cur.close()
-    
+
         return rows
 
-    
     def select_items(self, limit):
         """
         Query payload returning a limited number of rows.
 
         :param limit: The number of records to return.
         :type  limit: integer
-    
+
         :returns: Array containing ID, name and link.|False
         :rtype:   mixed|boolean
         """
@@ -63,7 +63,7 @@ class Db:
                 LIMIT 0,?"
         cur.execute(query, (limit,))
 
-        items = []    
+        items = []
         rows = cur.fetchall()
 
         for row in rows:
@@ -76,11 +76,10 @@ class Db:
 
         return items
 
-
     def select_single(self):
         """
         Query payload returning a single row.
-    
+
         :returns: Array containing ID, name and link.|False
         :rtype:   mixed|boolean
         """
@@ -90,9 +89,9 @@ class Db:
                 `payload` WHERE `downloaded` = 0 AND `downloaded_at` IS NULL \
                 LIMIT 0,1"
         cur.execute(query,)
-    
+
         rows = cur.fetchall()
-        
+
         for row in rows:
             item_id = row[0]
             item_name = row[1]
@@ -100,9 +99,8 @@ class Db:
 
         cur.close()
 
-        return item_id, item_name, item_link 
+        return item_id, item_name, item_link
 
-    
     def insert_record(self, payload_id, file_size, file_status):
         """
         Insert downloaded file details in downloads table.
@@ -123,14 +121,13 @@ class Db:
                 `status_code`, `created_at`) VALUES (?, ?, ?, \
                 strftime('%Y-%m-%d %H:%M:%S', 'now'))"
         cur.execute(query, (payload_id, file_size, file_status,))
-        
+
         conn.commit()
         insert_id = cur.lastrowid
         cur.close()
-    
+
         return insert_id
-    
-    
+
     def insert_upload(self, download_id, drive_id, drive_name):
         """
         Insert downloaded file details in uploads table.
@@ -141,7 +138,7 @@ class Db:
         :type  drive_id:    string
         :param drive_name:  The filename.
         :type  drive_name:  string
-    
+
         :returns: Last row id
         :rtype:   integer
         """
@@ -155,10 +152,9 @@ class Db:
         conn.commit()
         insert_id = cur.lastrowid
         cur.close()
-    
+
         return insert_id
-    
-    
+
     def update_record(self, status, payload_id):
         """
         Update the downloaded column in the payload table.
@@ -167,7 +163,7 @@ class Db:
         :type  status:     boolean
         :param payload_id: The payload identifier of the record to update.
         :type  payload_id: integer
-    
+
         :returns: True/False
         :rtype:   boolean
         """
@@ -179,10 +175,9 @@ class Db:
 
         conn.commit()
         cur.close()
-    
+
         return bool(execute)
-    
-    
+
     def update_filename(self, name, payload_id):
         """
         Update new filename in the payload table.
@@ -191,7 +186,7 @@ class Db:
         :type  name:       boolean
         :param payload_id: The payload identifier of the record to update.
         :type  payload_id: integer
-    
+
         :returns: Payload identifier.
         :rtype:   integer
         """
@@ -199,8 +194,8 @@ class Db:
         cur = conn.cursor()
         query = "UPDATE `payload` SET `payload_item_name` = ? WHERE `id` = ?"
         cur.execute(query, (name, payload_id,))
-        
+
         conn.commit()
         cur.close()
-    
+
         return name
