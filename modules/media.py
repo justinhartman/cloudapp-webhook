@@ -9,8 +9,8 @@ A module containing methods for working with media. These include methods for:
 - Define the save path for media files.
 - Define the folder to upload media files to.
 """
-import sys
 import requests
+import sys
 sys.path.append('../')
 import app
 import mime_types
@@ -55,17 +55,17 @@ def get_extension(url):
     # the return bool(0) to the same indent level as the for statement.
     # This needs to be tested.
     else:
-        return bool(0)
+        return False
 
 
 def save_path(filename):
     """
-    Generate a full path to download the file to.
+    Generate a path to download the file to in downloads module.
 
     :param filename: The file filename.
     :type  filename: string
 
-    :returns: Full path with filename.
+    :returns: Full path.
     :rtype:   string
     """
     img = filename.endswith(".png")
@@ -73,42 +73,42 @@ def save_path(filename):
     mp4 = filename.endswith(".mp4")
 
     if img:
-        full_path = app.MEDIA_IMAGE + filename
+        path = app.MEDIA_IMAGE
     elif mov:
-        full_path = app.MEDIA_VIDEO + filename
+        path = app.MEDIA_VIDEO
     elif mp4:
-        full_path = app.MEDIA_VIDEO + filename
+        path = app.MEDIA_VIDEO
     else:
-        full_path = app.MEDIA_OTHER + filename
+        path = app.MEDIA_OTHER
 
-    return full_path
+    return path
 
 
-def get_file_type(filename):
+def file_paths(filename):
     """
-    Get file type from filename.
+    Get local path and remote path from filename for rclone module.
 
     :param filename: The filename
     :type  filename: string
 
-    :returns: file_type|folder_id
-    :rtype:   string|string
+    :returns: Mixed variables.
+    :rtype:   string
     """
     img = filename.endswith(".png")
     mov = filename.endswith(".mov")
     mp4 = filename.endswith(".mp4")
 
     if img:
-        file_type = "image/png"
-        folder_id = app.DRIVE_IMAGE_FOLDER
+        src_path = app.MEDIA_IMAGE + filename
+        drv_path = app.RCLONE_GDRIVE_IMAGE
     elif mov:
-        file_type = "video/quicktime"
-        folder_id = app.DRIVE_VIDEO_FOLDER
+        src_path = app.MEDIA_VIDEO + filename
+        drv_path = app.RCLONE_GDRIVE_VIDEO
     elif mp4:
-        file_type = "video/mp4"
-        folder_id = app.DRIVE_VIDEO_FOLDER
+        src_path = app.MEDIA_VIDEO + filename
+        drv_path = app.RCLONE_GDRIVE_VIDEO
     else:
-        file_type = "application/octet-stream"
-        folder_id = app.DRIVE_OTHER_FOLDER
+        src_path = app.MEDIA_OTHER + filename
+        drv_path = app.RCLONE_GDRIVE_OTHER
 
-    return file_type, folder_id
+    return src_path, drv_path

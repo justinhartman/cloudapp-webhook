@@ -8,94 +8,99 @@ CloudApp and then uploading them to Google Drive using the Google Drive API.
 """
 import time
 import app
-import db
 import downloads
+import git
 import media
-import upload
-import utility
+import rclone
+from db import Db
+from utility import Utility
 
 
 def main():
     """Return the main application method."""
     started = time.time()
-    utility.timestamp_top()
-    # Path the database.
-    database = app.DATABASE_PATH
+    utl = Utility()
+    utl.timestamp_top()
     # create a database connection.
-    utility.timestamp_message("Opening the database connection.")
-    conn = db.create_connection(database)
-    with conn:
-        utility.timestamp_message("Getting list of records from database.")
-        rows = db.select_all(conn)
-        for row in rows:
-            """
-            Define some variables to reuse.
-            """
-            # Row data.
-            item_id = row[0]
-            name = row[1]
-            link = row[2]
-            # Generate a download URL from the link variable.
-            download_url = media.build_url(link)
+    utl.timestamp_message("Opening the database connection.")
+    con = Db()
+    utl.timestamp_message("Getting list of records from database.")
+    rows = con.select_all()
+    for row in rows:
+        """
+        Define some variables to reuse.
+        """
+        # Row data.
+        item_id = row[0]
+        name = row[1]
+        link = row[2]
+        # Generate a download URL from the link variable.
+        download_url = media.build_url(link)
 
-            """
-            Make sure the media folder actually exists.
-            """
-            if utility.check_path(app.MEDIA_PATH) is False:
-                utility.timestamp_message("ERROR: Media folder not valid.")
-                return 1
+        """
+        Make sure the media folder actually exists.
+        """
+        if utl.check_path(app.MEDIA_PATH) is False:
+            utl.timestamp_message("ERROR: Media folder not valid.")
+            return False
 
-            """
-            If no name is set, build a name and check the filetype.
-            """
-            if name is None:
-                # Get file extension from content-type.
-                ext = media.get_extension(download_url)
-                # Generate a random string.
-                ran = utility.random_string()
-                # Concatenate the filename with extension.
-                new_name = ran + str(ext)
-                # Save the new filename in the database.
-                db.update_filename(conn, new_name, item_id)
-                name = new_name
+        """
+        If no name is set, build a name and check the filetype.
+        """
+        if name is None:
+            # Get file extension from content-type.
+            ext = media.get_extension(download_url)
+            # Generate a random string.
+            ran = utl.random_string()
+            # Concatenate the filename with extension.
+            new_name = ran + str(ext)
+            # Save the new filename in the database.
+            con.update_filename(new_name, item_id)
+            name = new_name
 
-            """
-            Download the file to server.
-            """
-            utility.timestamp_message("Downloading \"" + name + "\"")
-            status, size = downloads.download_file(name, download_url)
-            utility.timestamp_message(str(status)+": "+name+" ("+link+")")
+        """
+        Check status, file size and link of the media url.
+        """
+        utl.timestamp_message("Checking media details for  \"" + name + "\"")
+        status, size, download = utl.media(download_url)
 
-            """
-            Update database if successfull.
-            """
-            if status == 200:
-                rid = db.insert_record(conn, item_id, size, status)
-                utility.timestamp_message(str(rid)+" inserted in downloads.")
-                db.update_record(conn, 1, item_id)
-                utility.timestamp_message("Updated ID " + str(item_id))
+        """
+        Download file, Update database and Upload to Drive if successful.
+        """
+        if status == 200:
+            # Download the file to server.
+            utl.timestamp_message("Downloading \"" + name + "\"")
+            downloads.aria_download(name, download)
+            utl.timestamp_message(str(status)+": "+name+" ("+link+")")
 
-                # Make connection to Google Drive API.
-                credentials = upload.get_client()
-                # Upload file to API.
-                utility.timestamp_message("Uploading to Google Drive.")
-                file_id, file_name = upload.upload_media(credentials, name)
-                # Insert Upload into DB.
-                db.insert_upload(conn, rid, file_id, file_name)
-                utility.timestamp_message(file_id+" inserted in uploads.")
-            elif status == 404:
-                db.update_record(conn, 2, item_id)
-                utility.timestamp_message("404 file not found.")
-            else:
-                print(utility.date_time(2) + " General error")
-                utility.timestamp_message("General Unknown Error.")
+            # Insert downloaded file to the downloads table.
+            rid = con.insert_record(item_id, size, status)
+            utl.timestamp_message(str(rid)+" inserted in downloads.")
+
+            # Update payload table.
+            con.update_record(1, item_id)
+            utl.timestamp_message("Updated ID: " + str(item_id))
+
+            # Upload file to drive.
+            utl.timestamp_message("Uploading to Google Drive.")
+            file_name = rclone.upload_gdrive(name)
+
+            # Insert Upload into uploads table.
+            con.insert_upload(rid, item_id, file_name)
+            utl.timestamp_message(file_name+" inserted in uploads.")
+        elif status == 404:
+            con.update_record(2, item_id)
+            utl.timestamp_message("404 file not found.")
         else:
-            utility.timestamp_message("Closing the database connection.")
-    conn.close()
-    completed = time.time()
-    utility.timestamp_tail(completed, started)
+            utl.timestamp_message("Unknown Error. Status: " + str(status))
+    else:
+        utl.timestamp_message("Updating the Git repository.")
+        git.commit_db()
 
-    return bool(1)
+    completed = time.time()
+    utl.timestamp_tail(completed, started)
+
+    return True
 
 
 if __name__ == '__main__':
