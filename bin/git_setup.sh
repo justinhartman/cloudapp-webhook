@@ -20,10 +20,13 @@ git_setup () {
     echo "Setting up the Git repo..."
     rm .gitignore
     git init
-    git remote add origin https://"${GITLAB_USERNAME}":"${GITLAB_WRITE_REPO}"@gitlab.com/ctca/heroku-media.git
-    git config --global user.name "CTCA GitLab Heroku"
-    git config --global user.email "ctca-gitlab-heroku@hartman.me"
-    git pull origin master
+    git remote add origin https://"${GITHUB_USERNAME}":"${GITHUB_WRITE_REPO}"@github.com/thecreativeacademy/heroku-media.git
+    git lfs track "*.mov"
+    git lfs track "*.mp4"
+    git config --global user.name "Automated GitHub User"
+    git config --global user.email "j.hartman@ctca.co.za"
+    git pull -f origin master
+    git fetch --tags
 }
 
 #######################################

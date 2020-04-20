@@ -50,6 +50,7 @@ function autoload()
 {
     include_once getcwd()."/classes/Log.php";
     include_once getcwd()."/classes/Mail.php";
+    include_once getcwd()."/classes/MessageQueue.php";
     include_once getcwd()."/classes/Database/SqliteConnect.php";
     include_once getcwd()."/classes/Database/SqliteInsert.php";
 }

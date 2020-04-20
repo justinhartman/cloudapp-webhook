@@ -9,16 +9,12 @@
 !/logs/.gitkeep
 # Don't track vendor.
 /vendor/
-# App specific ignores.
-/info.md
 # Python
-/idiot.py
-# Dev items.
-/.nova
-/old/
 /pythontest/
-/GIT.md
-/modules/git.py
+# Dev items.
+/.nova/
+/old/
 # Build items
 *.pyc
 __pycache__/
+/logs
