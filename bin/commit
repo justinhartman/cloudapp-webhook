@@ -1,6 +1,7 @@
 #!/bin/bash
 #
-# Webhook script to commit files to the repo.
+# Cron job script to commit files to the repo.
+# /app/main >> /app/logs/python.log && /app/bin/commit
 #
 # Author: Justin Hartman <j.hartman@ctca.co.za>
 # Version: 1.0.0
@@ -18,7 +19,7 @@
 #######################################
 commit_db () {
     git add database logs
-    git commit -am "Automated: PHP Webhook commit."
+    git commit -am "Automated: Cronjob commit."
     git push -u origin master
 
     return
