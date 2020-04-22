@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Cron job script to commit files to the repo.
 # /app/main >> /app/logs/python.log && /app/bin/commit
