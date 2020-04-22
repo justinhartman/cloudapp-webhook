@@ -25,7 +25,7 @@ def fetch(util):
     :type  util: object
     """
     utl.timestamp_top()
-    command = ['cd', '/app'']
+    command = ['cd', '/app/']
     utl.sub_process(command)
 
     utl.timestamp_message("Executing ./main to Download and Sync to drive.")
