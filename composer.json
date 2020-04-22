@@ -44,7 +44,7 @@
     "prefer-stable": true,
     "scripts": {
       "post-install-cmd": [
-        "/bin/bash bin/git_setup.sh"
+        "/bin/bash bin/setup"
       ]
     }
 }
