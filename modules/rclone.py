@@ -6,6 +6,7 @@ Rclone module.
 import subprocess
 
 from media import file_paths
+from utility import Utility
 
 
 def upload_gdrive(filename):
@@ -20,13 +21,10 @@ def upload_gdrive(filename):
     """
     src_path, dst = file_paths(filename)
     src = 'local:' + src_path
+    utl = Utility()
 
     command = ['rclone', 'copy', '-P', src, dst]
-    process = subprocess.run(
-        command,
-        check=True,
-        text=True
-    )
+    utl.sub_process(command)
 
     return filename
 
