@@ -21,19 +21,20 @@ def deploy():
 
 """Heroku Specific Methods."""
 def fetch():
-    local("heroku run ./bin/fetch")
+    local("heroku run ./bin/fetch -a cloudapp-webhooks")
+    # cloudapp-staging
 
 
 def ps():
-    local("heroku ps")
+    local("heroku ps -a cloudapp-webhooks")
 
 
 def exec():
-    local("heroku ps:exec")
+    local("heroku ps:exec -a cloudapp-webhooks")
 
 
 def tail_worker():
-    local("heroku logs --tail --ps worker")
+    local("heroku logs --tail --ps worker -a cloudapp-webhooks")
 
 
 def tail():
