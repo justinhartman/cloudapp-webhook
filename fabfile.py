@@ -12,7 +12,7 @@ def build(message):
     $ fab build::"Message in quotes."
     """
     local('git commit -am "%s"' % message)
-    push_heroku
+    push_heroku()
 
 
 def commit(message):
@@ -20,19 +20,19 @@ def commit(message):
     $ fab commit::"Message in quotes."
     """
     local('git commit -am "%s"' % message)
-    push_github
+    push_github()
 
 
 def push_github():
-    local("git push origin master")
+    local('git push origin master')
 
 
 def push_heroku():
-    local("git push heroku master")
+    local('git push heroku master')
 
 
 def fetch_local():
-    local("./bin/fetch")
+    local('./bin/fetch')
 
 
 def deploy():
@@ -42,24 +42,24 @@ def deploy():
 
 """Heroku Specific Methods."""
 def fetch():
-    local("heroku run /app/bin/fetch -a cloudapp-webhooks")
+    local('heroku run /app/bin/fetch -a cloudapp-webhooks')
     # cloudapp-staging
 
 
 def ps():
-    local("heroku ps -a cloudapp-webhooks")
+    local('heroku ps -a cloudapp-webhooks')
 
 
 def exec():
-    local("heroku ps:exec -a cloudapp-webhooks")
+    local('heroku ps:exec -a cloudapp-webhooks')
 
 
 def tail_worker():
-    local("heroku logs --tail --ps worker -a cloudapp-webhooks")
+    local('heroku logs --tail --ps worker -a cloudapp-webhooks')
 
 
 def tail():
-    local("heroku logs --tail -a cloudapp-webhooks")
+    local('heroku logs --tail -a cloudapp-webhooks')
 
 
 def test():
