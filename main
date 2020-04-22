@@ -7,6 +7,7 @@ This script contains all the application code for downloading media from
 CloudApp and then uploading them to Google Drive using the Google Drive API.
 """
 import time
+
 import app
 import downloads
 import git
