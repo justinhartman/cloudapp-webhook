@@ -91,7 +91,7 @@ class MessageQueue
         $channel->close();
         // $conn->close();
 
-        $status = print(" [x] '".$text."' sent to AMQP Stream.");
+        $status = print(" ✅ '".$text."' sent to AMQP Stream.");
 
         return $status;
     }
