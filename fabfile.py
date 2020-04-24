@@ -60,6 +60,11 @@ def exec():
     return result.return_code
 
 
+def exec_staging():
+    result = local('heroku ps:exec -a cloudapp-staging')
+    return result.return_code
+
+
 def tail_worker():
     result = local('heroku logs --tail --ps worker -a cloudapp-webhooks')
     return result.return_code
