@@ -63,7 +63,7 @@ def worker(conn, exch, type, php, python):
     # Start consuming both queues.
     # channel.start_consuming()
 
-    print(' ✳️ Waiting for messages. To exit press CTRL+C')
+    print(' ✳️  Waiting for messages. To exit press CTRL+C')
 
     return channel
 
@@ -81,9 +81,9 @@ def php_callback(ch, method, properties, body):
     :param body:       Message body.
     :type  body:       string
     """
-    print(" ✅ Received PHP Message: %r" % body)
+    print(" ✅  Received PHP Message: %r" % body)
     sleep(5)
-    print(" ✅ Done")
+    print(" ✅  Done")
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
 
@@ -100,9 +100,9 @@ def python_callback(ch, method, properties, body):
     :param body:       Message body.
     :type  body:       string
     """
-    print(" ✅ Received Python Message: %r" % body)
+    print(" ✅  Received Python Message: %r" % body)
     sleep(5)
-    print(" ✅ Done")
+    print(" ✅  Done")
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
 
