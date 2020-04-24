@@ -23,9 +23,9 @@ def main():
     utl = Utility()
     utl.timestamp_top()
     # create a database connection.
-    utl.timestamp_message("Opening the database connection.")
+    utl.timestamp_message("✅ Opening the database connection.")
     con = Db()
-    utl.timestamp_message("Getting list of records from database.")
+    utl.timestamp_message("✅ Getting list of records from database.")
     rows = con.select_all()
     for row in rows:
         """
@@ -42,7 +42,7 @@ def main():
         Make sure the media folder actually exists.
         """
         if utl.check_path(app.MEDIA_PATH) is False:
-            utl.timestamp_message("ERROR: Media folder not valid.")
+            utl.timestamp_message("🔴 ERROR: Media folder not valid.")
             return False
 
         """
@@ -62,7 +62,7 @@ def main():
         """
         Check status, file size and link of the media url.
         """
-        utl.timestamp_message("Checking media details for  \"" + name + "\"")
+        utl.timestamp_message("✅ Checking media details for  \"" + name + "\"")
         status, size, download = utl.media(download_url)
 
         """
@@ -70,7 +70,7 @@ def main():
         """
         if status == 200:
             # Download the file to server.
-            utl.timestamp_message("Downloading \"" + name + "\"")
+            utl.timestamp_message("✅ Downloading \"" + name + "\"")
             downloads.aria_download(name, download)
             utl.timestamp_message(str(status)+": "+name+" ("+link+")")
 
@@ -80,10 +80,10 @@ def main():
 
             # Update payload table.
             con.update_record(1, item_id)
-            utl.timestamp_message("Updated ID: " + str(item_id))
+            utl.timestamp_message("✅ Updated ID: " + str(item_id))
 
             # Upload file to drive.
-            utl.timestamp_message("Uploading to Google Drive.")
+            utl.timestamp_message("✅ Uploading to Google Drive.")
             file_name = rclone.upload_gdrive(name)
 
             # Insert Upload into uploads table.
@@ -91,11 +91,11 @@ def main():
             utl.timestamp_message(file_name+" inserted in uploads.")
         elif status == 404:
             con.update_record(2, item_id)
-            utl.timestamp_message("404 file not found.")
+            utl.timestamp_message("🔴 404 file not found.")
         else:
-            utl.timestamp_message("Unknown Error. Status: " + str(status))
+            utl.timestamp_message("🔴 Unknown Error. ⚠️  " + str(status))
     else:
-        utl.timestamp_message("Updating the Git repository.")
+        utl.timestamp_message("✅ Updating the Git repository.")
         git.commit_db()
 
     completed = time.time()

@@ -99,7 +99,7 @@ function sendMail(object $logger, string $subject, string $body)
         $mail->send($conn, $recipient, $subject, $body);
         $log = $logger->info(sprintf('✅ PHPMailer Sent: %s', $subject));
     } catch (Exception $e) {
-        $log = $logger->error(sprintf('❎ PHPMailer Error: %s', $e->getMessage()));
+        $log = $logger->error(sprintf('🔴 PHPMailer Error: %s', $e->getMessage()));
     }
 
     return $log;
@@ -118,7 +118,7 @@ function gitCommit(object $logger)
         $log = $logger->info('✅ Running ./bin/webhook to commit files.');
         shell_exec('/bin/bash /app/bin/webhook');
     } catch (Exception $e) {
-        $log = $logger->error(sprintf('❎ Git Commit ⚠️ %s', $e->getMessage()));
+        $log = $logger->error(sprintf('🔴 Git Commit ⚠️ %s', $e->getMessage()));
     }
 
     return $log;
@@ -149,7 +149,7 @@ try {
 } catch (Exception $e) {
     $logger->error(
         sprintf(
-            '❎ Method not allowed ⚠️ Code: %s 🧭 User-Agent: %s.',
+            '🔴 Method not allowed ⚠️  %s 🧭 User-Agent: %s.',
             405,
             $e->getMessage()
         )
@@ -208,7 +208,7 @@ try {
     // Build error messages.
     $mailSubError = $payloadName . " dbInsert error";
     $errorMessage = sprintf(
-        '❎ Index dbInsert error ⚠️ %s. 📝 %s',
+        '🔴 Index dbInsert error ⚠️  %s. 📝 %s',
         $e->getCode(),
         $e->getMessage()
     );
