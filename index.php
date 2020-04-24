@@ -97,9 +97,9 @@ function sendMail(object $logger, string $subject, string $body)
     try {
         $mail = new Mail;
         $mail->send($conn, $recipient, $subject, $body);
-        $log = $logger->info(sprintf('PHPMailer Sent: %s', $subject));
+        $log = $logger->info(sprintf('✅ PHPMailer Sent: %s', $subject));
     } catch (Exception $e) {
-        $log = $logger->error(sprintf('PHPMailer Error: %s', $e->getMessage()));
+        $log = $logger->error(sprintf('❎ PHPMailer Error: %s', $e->getMessage()));
     }
 
     return $log;
@@ -115,10 +115,10 @@ function sendMail(object $logger, string $subject, string $body)
 function gitCommit(object $logger)
 {
     try {
-        $log = $logger->info('Running ./bin/webhook to commit files.');
+        $log = $logger->info('✅ Running ./bin/webhook to commit files.');
         shell_exec('/bin/bash /app/bin/webhook');
     } catch (Exception $e) {
-        $log = $logger->error(sprintf('Git Commit Error: %s', $e->getMessage()));
+        $log = $logger->error(sprintf('❎ Git Commit ⚠️ %s', $e->getMessage()));
     }
 
     return $log;
@@ -143,12 +143,13 @@ $log->logRequest();
  */
 try {
     if (checkMethod() === false) {
-        throw new Exception('Method not allowed.');
+        $browser = $_SERVER['HTTP_USER_AGENT'];
+        throw new Exception($browser);
     }
 } catch (Exception $e) {
     $logger->error(
         sprintf(
-            'Method not allowed. Code: %s. Error: %s.',
+            '❎ Method not allowed ⚠️ Code: %s 🧭 User-Agent: %s.',
             405,
             $e->getMessage()
         )
@@ -191,7 +192,7 @@ try {
         // Build success messages.
         $mailSubSuccess = $payloadName . " Inserted into DB";
         $successMessage = sprintf(
-            'Inserted %s (%s) created at %s into SQLite Database.',
+            '✅ Inserted %s (%s) into DB 🕒 %s',
             $payloadName,
             $payloadUrl,
             $payloadDate
@@ -207,7 +208,7 @@ try {
     // Build error messages.
     $mailSubError = $payloadName . " dbInsert error";
     $errorMessage = sprintf(
-        'Index dbInsert error code %s. Error: %s',
+        '❎ Index dbInsert error ⚠️ %s. 📝 %s',
         $e->getCode(),
         $e->getMessage()
     );

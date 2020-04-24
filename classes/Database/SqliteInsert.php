@@ -96,7 +96,7 @@ class SqliteInsert
             $json = print $jsonArray;
         } else {
             header('Bad Request', true, 400);
-            throw new \Exception('Filename: ' .$itemName. ' could not be inserted into the database.', 400);
+            throw new \Exception('📄 ' .$itemName. ' could not be inserted into DB.', 400);
         }
 
         return $json;

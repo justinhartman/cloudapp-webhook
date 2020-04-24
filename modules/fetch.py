@@ -28,7 +28,7 @@ def fetch(util):
     command = ['cd', '/app/']
     utl.sub_process(command)
 
-    utl.timestamp_message("Executing ./main to Download and Sync to drive.")
+    utl.timestamp_message("✅ Executing ./main to Download and Sync to drive.")
     command = ['./main', '>>', './logs/python.log']
     utl.sub_process(command)
 
@@ -40,15 +40,15 @@ def commit(util):
     :param util: Utility Class.
     :type  util: object
     """
-    utl.timestamp_message("Git: Adding new files to repository.")
+    utl.timestamp_message("✅ Git: Adding new files to repository.")
     command = ['git', 'add', 'database', 'logs']
     utl.sub_process(command)
 
-    utl.timestamp_message("Git: Committing files to local repository.")
-    command = ['git', 'commit', '-am', 'Automated: Fetch script commit.']
+    utl.timestamp_message("✅ Git: Committing files to local repository.")
+    command = ['git', 'commit', '-am', ':robot: Fetch script commit.']
     utl.sub_process(command)
 
-    utl.timestamp_message("Git: Pushing local commit to GitHub.")
+    utl.timestamp_message("✅ Git: Pushing local commit to GitHub.")
     command = ['git', 'push', '-u', 'origin', 'master']
     utl.sub_process(command)
 
@@ -57,6 +57,6 @@ def commit(util):
 fetch(utl)
 commit(utl)
 
-"""Stop the timer and output the time took to run the scrupt."""
+"""Stop the timer and output the time took to run the script."""
 completed = time.time()
 utl.timestamp_tail(completed, started)
