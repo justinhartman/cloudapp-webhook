@@ -11,7 +11,7 @@ def build(message):
     """
     $ fab build::"Message in quotes."
     """
-    local('git commit -am "%s"' % message)
+    local('$(which git) commit -am "%s"' % message)
     push_heroku()
 
 
@@ -19,17 +19,17 @@ def commit(message):
     """
     $ fab commit::"Message in quotes."
     """
-    local('git commit -am "%s"' % message)
+    local('$(which git) commit -am "%s"' % message)
     push_github()
 
 
 def push_github():
-    result = local('git push origin master')
+    result = local('$(which git) push origin master')
     return result.return_code
 
 
 def push_heroku():
-    result = local('git push heroku master')
+    result = local('$(which git) push heroku master')
     return result.return_code
 
 
@@ -45,33 +45,33 @@ def deploy():
 
 """Heroku Specific Methods."""
 def fetch():
-    result = local('heroku run /app/bin/fetch -a cloudapp-webhooks')
+    result = local('$(which heroku) run /app/bin/fetch -a cloudapp-webhooks')
     return result.return_code
 
 
 def ps():
-    result = local('heroku ps -a cloudapp-webhooks')
+    result = local('$(which heroku) ps -a cloudapp-webhooks')
     return result.return_code
 
 
 
 def exec():
-    result = local('heroku ps:exec -a cloudapp-webhooks')
+    result = local('$(which heroku) ps:exec -a cloudapp-webhooks')
     return result.return_code
 
 
 def exec_staging():
-    result = local('heroku ps:exec -a cloudapp-staging')
+    result = local('$(which heroku) ps:exec -a cloudapp-staging')
     return result.return_code
 
 
 def tail_worker():
-    result = local('heroku logs --tail --ps worker -a cloudapp-webhooks')
+    result = local('$(which heroku) logs --tail --ps worker -a cloudapp-webhooks')
     return result.return_code
 
 
 def tail():
-    result = local('heroku logs --tail -a cloudapp-webhooks')
+    result = local('$(which heroku) logs --tail -a cloudapp-webhooks')
     return result.return_code
 
 

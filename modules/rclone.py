@@ -29,8 +29,3 @@ def upload_gdrive(filename):
     )
 
     return filename
-
-
-def upload_gandi(filename):
-    # Code here
-    return True
