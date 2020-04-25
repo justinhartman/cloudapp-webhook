@@ -74,6 +74,10 @@ def tail():
     result = local('$(which heroku) logs --tail -a cloudapp-webhooks')
     return result.return_code
 
+def tail_staging():
+    result = local('$(which heroku) logs --tail -a cloudapp-staging')
+    return result.return_code
+
 
 def test():
     code_dir = '/app/'
