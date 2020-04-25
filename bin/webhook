@@ -17,8 +17,9 @@
 #   None
 #######################################
 commit_db () {
+    git pull origin master
     git add database logs
-    git commit -am "Automated: PHP Webhook commit."
+    git commit -am ":robot: PHP Webhook commit."
     git push -u origin master
 
     return
