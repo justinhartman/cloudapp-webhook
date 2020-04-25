@@ -10,6 +10,10 @@ from utility import Utility
 
 def commit_db():
     utl = Utility()
+
+    pull = ['git', 'pull', 'origin', 'master']
+    utl.sub_process(pull)
+
     add = ['git', 'add', 'database', 'logs']
     process_add = utl.sub_process(add)
 
