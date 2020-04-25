@@ -8,7 +8,7 @@ CloudApp and then uploading them to Google Drive using the Google Drive API.
 """
 import time
 
-import app
+import settings
 import downloads
 import git
 import media
@@ -41,7 +41,7 @@ def main():
         """
         Make sure the media folder actually exists.
         """
-        if utl.check_path(app.MEDIA_PATH) is False:
+        if utl.check_path(settings.MEDIA_PATH) is False:
             utl.timestamp_message("🔴 ERROR: Media folder not valid.")
             return False
 
