@@ -23,7 +23,7 @@ git_setup () {
     git remote add origin https://"${GITHUB_USERNAME}":"${GITHUB_WRITE_REPO}"@github.com/thecreativeacademy/heroku-media.git
     git lfs track "*.mov"
     git lfs track "*.mp4"
-    git config --global user.name "Automated GitHub User"
+    git config --global user.name "Automated Bot"
     git config --global user.email "j.hartman@ctca.co.za"
     git pull -f origin master
     git fetch --tags
