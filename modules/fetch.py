@@ -4,7 +4,7 @@
 Fetch script.
 
 Script executes the main app and commits file addition and changes to the
-Githhub repository.
+GitHub repository.
 """
 import time
 
@@ -40,6 +40,10 @@ def commit(util):
     :param util: Utility Class.
     :type  util: object
     """
+    utl.timestamp_message("✅ Git: Pulling repository changes from origin.")
+    command = ['git', 'pull', 'origin', 'master']
+    utl.sub_process(command)
+
     utl.timestamp_message("✅ Git: Adding new files to repository.")
     command = ['git', 'add', 'database', 'logs']
     utl.sub_process(command)
