@@ -9,7 +9,7 @@ use in the application.
 import sqlite3
 from sqlite3 import Error
 
-from app import DATABASE_PATH
+from settings import DATABASE_PATH
 
 
 class Db:
