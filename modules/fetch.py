@@ -33,7 +33,7 @@ def main():
     git.git_pull()
 
     # Run the main.py script.
-    utl.timestamp_message("🟢 Executing ./main to Download and Sync to drive.")
+    utl.timestamp_message("🟢 Executing ./bin/main...")
     command = ['./bin/main', '>>', './logs/python.log']
     utl.sub_process(command)
 
