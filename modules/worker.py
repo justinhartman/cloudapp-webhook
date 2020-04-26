@@ -63,7 +63,7 @@ def worker(conn, exch, type, php, python):
     # Start consuming both queues.
     # channel.start_consuming()
 
-    print(' ✳️  Waiting for messages. To exit press CTRL+C')
+    print(' 🟢  Waiting for messages. To exit press CTRL+C')
 
     return channel
 

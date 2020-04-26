@@ -54,9 +54,13 @@ def ps():
     return result.return_code
 
 
-
 def exec():
     result = local('$(which heroku) ps:exec -a cloudapp-webhooks')
+    return result.return_code
+
+
+def exec_staging():
+    result = local('$(which heroku) ps:exec -a cloudapp-staging')
     return result.return_code
 
 
@@ -73,6 +77,7 @@ def tail_worker():
 def tail():
     result = local('$(which heroku) logs --tail -a cloudapp-webhooks')
     return result.return_code
+
 
 def tail_staging():
     result = local('$(which heroku) logs --tail -a cloudapp-staging')
