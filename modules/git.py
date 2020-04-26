@@ -20,7 +20,7 @@ def git_pull():
     return process
 
 
-def commit_db():
+def git_commit():
     """
     Commit the latest files to the GitHub media repository.
     """
@@ -28,7 +28,7 @@ def commit_db():
     add = ['git', 'add', 'database', 'logs']
     process_add = utl.sub_process(add)
 
-    message = str(':robot: commit from :snake: code.')
+    message = str(':robot: Commit triggered by :snake:')
     commit = ['git', 'commit', '-am', message]
     process_com = utl.sub_process(commit)
 
