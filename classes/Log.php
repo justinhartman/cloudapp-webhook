@@ -67,7 +67,7 @@ class Log
         $date = date('Y-m-d H:i:s');
         $fh = fopen($myFile, 'a') or die("can't open file");
         fwrite($fh, "\n----------------------------------------------------\n");
-        fwrite($fh, $date);
+        fwrite($fh, "🕒 ".$date);
         fwrite($fh, "\n");
         foreach ($_SERVER as $h => $v) {
             if (preg_match('/HTTP_(.+)/', $h, $hp)) {
@@ -90,7 +90,7 @@ class Log
         $date = date('Y-m-d H:i:s');
         $fh = fopen($myFile, 'a') or die("can't open file");
         fwrite($fh, "\n----------------------------------------------------\n");
-        fwrite($fh, $date);
+        fwrite($fh, "🕒 ".$date);
         fwrite($fh, "\n");
         fwrite($fh, file_get_contents('php://input'));
         fclose($fh);

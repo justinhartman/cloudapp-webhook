@@ -17,11 +17,11 @@
     ],
     "require": {
         "php": "^7.3.0",
-        "google/apiclient": "^2.0",
-        "phpmailer/phpmailer": "^6.1",
-        "php-amqplib/php-amqplib": "2.11.*",
         "ext-bcmath": "*",
-        "ext-pdo_sqlite": "*"
+        "ext-pdo_sqlite": "*",
+        "monolog/monolog": "^2.0",
+        "php-amqplib/php-amqplib": "2.11.*",
+        "phpmailer/phpmailer": "^6.1"
     },
     "extra": {
       "heroku": {
