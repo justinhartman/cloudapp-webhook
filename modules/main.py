@@ -86,7 +86,7 @@ def main():
             utl.timestamp_message("🔴 404 file not found.")
         else:
             utl.timestamp_message("🔴 Unknown Error. ⚠️  " + str(status))
-    else
+    else:
         utl.timestamp_message("🟢 Finished running.")
 
     return True
