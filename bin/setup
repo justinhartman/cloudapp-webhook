@@ -17,7 +17,7 @@
 #   None
 #######################################
 git_setup () {
-    echo "Setting up the Git repo..."
+    echo "🟢 Setting up the local git repository..."
     rm .gitignore
     git init
     git remote add origin https://"${GITHUB_USERNAME}":"${GITHUB_WRITE_REPO}"@github.com/thecreativeacademy/heroku-media.git
@@ -39,7 +39,7 @@ git_setup () {
 #   None
 #######################################
 cleanup() {
-    echo "Performing a cleanup on the server..."
+    echo "🟢 Performing cleanup on server..."
     rm .config/create.sql
     rm README.md
 }

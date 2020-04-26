@@ -18,8 +18,9 @@
 #   None
 #######################################
 commit_db () {
+    echo "🟢 Commiting files to the GitHub repo..."
     git add database logs
-    git commit -am "Automated: Cronjob commit."
+    git commit -am ":robot: Commit triggered by cron"
     git push -u origin master
 
     return
