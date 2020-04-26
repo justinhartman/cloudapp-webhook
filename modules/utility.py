@@ -128,7 +128,7 @@ class Utility:
         """
         value = Utility.time_formatter(self, end, start)
         head = '================================================================================'
-        subj = "⌛️ Script took %d min %d seconds to run." % (value[2], value[3])
+        subj = "⌛️ Completed in  %d min %d seconds to run." % (value[2], value[3])
         line = '--------------------------------------------------------------------------------'
         build = print(line), print(subj), print(head)
         # build = head, subj, line
