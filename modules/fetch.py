@@ -4,59 +4,48 @@
 Fetch script.
 
 Script executes the main app and commits file addition and changes to the
-Githhub repository.
+GitHub repository.
 """
 import time
 
+import git
 from utility import Utility
 
 
-"""Setup the Utility class and start the timer."""
-utl = Utility()
-started = time.time()
-
-
-def fetch(util):
+def main():
     """
-    Runs the ./main app script which downloads media to the server, updates the
-    database with the records and then pushes all the media to Google Drive.
+    Runs the ./bin/main app script which downloads media to the server, updates
+    the database with the records and then pushes all the media to Google Drive.
 
-    :param util: Utility Class.
-    :type  util: object
+    :returns: Status of the execution.
+    :rtype:   boolean
     """
+    # Setup the Utility class and start the timer.
+    utl = Utility()
+    started = time.time()
+
+    # cd into the /app directory.
     utl.timestamp_top()
     command = ['cd', '/app/']
     utl.sub_process(command)
 
-    utl.timestamp_message("Executing ./main to Download and Sync to drive.")
-    command = ['./main', '>>', './logs/python.log']
+    # Fetch latest files.
+    git.git_pull()
+
+    # Run the main.py script.
+    utl.timestamp_message("🟢 Executing ./bin/main...")
+    command = ['./bin/main', '>>', './logs/python.log']
     utl.sub_process(command)
 
+    # Commit files to media repo.
+    git.git_commit()
 
-def commit(util):
-    """
-    Commits the updated database and log files back to the GitHub repo.
+    # Stop the timer and output the time took to run the script
+    completed = time.time()
+    utl.timestamp_tail(completed, started)
 
-    :param util: Utility Class.
-    :type  util: object
-    """
-    utl.timestamp_message("Git: Adding new files to repository.")
-    command = ['git', 'add', 'database', 'logs']
-    utl.sub_process(command)
-
-    utl.timestamp_message("Git: Committing files to local repository.")
-    command = ['git', 'commit', '-am', 'Automated: Fetch script commit.']
-    utl.sub_process(command)
-
-    utl.timestamp_message("Git: Pushing local commit to GitHub.")
-    command = ['git', 'push', '-u', 'origin', 'master']
-    utl.sub_process(command)
+    return True
 
 
-"""Run the methods."""
-fetch(utl)
-commit(utl)
-
-"""Stop the timer and output the time took to run the scrupt."""
-completed = time.time()
-utl.timestamp_tail(completed, started)
+if __name__ == '__main__':
+    main()

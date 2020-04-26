@@ -64,8 +64,9 @@ class Utility:
         """
         today = datetime.now() + timedelta(hours=offset)
         formatted = today.strftime('%F %T')
+        string = '🕜 ' + formatted
 
-        return formatted
+        return string
 
     def random_string(self, size=32):
         """
@@ -91,7 +92,7 @@ class Utility:
         :rtype:   string
         """
         head = '================================================================================'
-        subj = "CloudApp/Google Drive Python Script Log"
+        subj = "🐍 CloudApp/Google Drive Python Script Log"
         line = '--------------------------------------------------------------------------------'
         build = print(head), print(subj), print(line)
 
@@ -127,7 +128,7 @@ class Utility:
         """
         value = Utility.time_formatter(self, end, start)
         head = '================================================================================'
-        subj = "Script took %d min %d seconds to run." % (value[2], value[3])
+        subj = "⌛️ Completed in  %d min %d seconds to run." % (value[2], value[3])
         line = '--------------------------------------------------------------------------------'
         build = print(line), print(subj), print(head)
         # build = head, subj, line

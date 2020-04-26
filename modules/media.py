@@ -12,7 +12,7 @@ A module containing methods for working with media. These include methods for:
 import requests
 import sys
 sys.path.append('../')
-import app
+import settings
 import mime_types
 
 
@@ -26,7 +26,7 @@ def build_url(url):
     :returns: New download url.
     :rtype:   string
     """
-    replace = app.HTTP_URL
+    replace = settings.HTTP_URL
     items = "https://media.ctca.co.za/items"
     link = url.replace(replace, items) + "/download"
 
@@ -73,13 +73,13 @@ def save_path(filename):
     mp4 = filename.endswith(".mp4")
 
     if img:
-        path = app.MEDIA_IMAGE
+        path = settings.MEDIA_IMAGE
     elif mov:
-        path = app.MEDIA_VIDEO
+        path = settings.MEDIA_VIDEO
     elif mp4:
-        path = app.MEDIA_VIDEO
+        path = settings.MEDIA_VIDEO
     else:
-        path = app.MEDIA_OTHER
+        path = settings.MEDIA_OTHER
 
     return path
 
@@ -99,16 +99,16 @@ def file_paths(filename):
     mp4 = filename.endswith(".mp4")
 
     if img:
-        src_path = app.MEDIA_IMAGE + filename
-        drv_path = app.RCLONE_GDRIVE_IMAGE
+        src_path = settings.MEDIA_IMAGE + filename
+        drv_path = settings.RCLONE_GDRIVE_IMAGE
     elif mov:
-        src_path = app.MEDIA_VIDEO + filename
-        drv_path = app.RCLONE_GDRIVE_VIDEO
+        src_path = settings.MEDIA_VIDEO + filename
+        drv_path = settings.RCLONE_GDRIVE_VIDEO
     elif mp4:
-        src_path = app.MEDIA_VIDEO + filename
-        drv_path = app.RCLONE_GDRIVE_VIDEO
+        src_path = settings.MEDIA_VIDEO + filename
+        drv_path = settings.RCLONE_GDRIVE_VIDEO
     else:
-        src_path = app.MEDIA_OTHER + filename
-        drv_path = app.RCLONE_GDRIVE_OTHER
+        src_path = settings.MEDIA_OTHER + filename
+        drv_path = settings.RCLONE_GDRIVE_OTHER
 
     return src_path, drv_path
