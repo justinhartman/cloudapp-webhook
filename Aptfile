@@ -1,3 +1,5 @@
 # Test comment
 htop
 cron
+anacron
+logrotate
