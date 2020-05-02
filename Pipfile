@@ -1,0 +1,23 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+requests = "==2.23.0"
+certifi = "==2020.4.5.1"
+chardet = "==3.0.4"
+idna = "==2.9"
+pika = "==1.1.0"
+pytz = "==2019.3"
+urllib3 = "==1.25.8"
+zope-interface = "==5.1.0"
+DateTime = "==4.3"
+Fabric3 = "==1.14.post1"
+Flask = "==1.1.2"
+gunicorn = "==20.0.4"
+
+[requires]
+python_version = "3.7"
