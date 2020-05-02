@@ -11,6 +11,7 @@
 /vendor/
 # Python
 /pythontest/
+/modules/__init__.py
 # Dev items.
 /.nova/
 /old/
