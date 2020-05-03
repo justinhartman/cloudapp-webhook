@@ -31,11 +31,11 @@ header('Content-Type: application/json');
 const SQLITE_DATABASE = 'database/database.sqlite';
 
 /**
- * General Mail settings.
+ * Send In Blue Mail settings.
  */
-const MAIL_HOST = 'smtp.mailgun.org';
-const MAIL_USER = 'ctca@mail.fightspam.email';
-const MAIL_PASS = 'dbf388c574dc4d63fa5c5b4d51d47866-aa4b0867-edb535ef';
+const MAIL_HOST = 'smtp-relay.sendinblue.com';
+const MAIL_USER = 'iamjustinhartman@gmail.com';
+const MAIL_PASS = 'xsmtpsib-2397315cd9d59519dfea78f2abbe908bfefd2e868fa252514999e26ce54946fd-7bZz5Mfs12EScaT4';
 const MAIL_PORT = 587;
 const MAIL_FROM_NAME = 'Creative Academy';
 const MAIL_FROM_ADDRESS = 'noreply@ctca.co.za';
