@@ -44,3 +44,15 @@ Rclone Drive values.
 RCLONE_GDRIVE_IMAGE = 'gdrive:1. CloudApp Images'
 RCLONE_GDRIVE_VIDEO = 'gdrive:2. CloudApp Videos'
 RCLONE_GDRIVE_OTHER = 'gdrive:3. CloudApp Uncategorised'
+"""
+Mail config.
+"""
+MAIL_FROM_NAME = 'Creative Academy'
+MAIL_FROM_ADDRESS = 'noreply@ctca.co.za'
+"""
+SendInBlue email configuration.
+"""
+SIB_HOST = 'smtp-relay.sendinblue.com'
+SIB_PORT = 587
+SIB_USER = 'iamjustinhartman@gmail.com'
+SIB_PASS = 'xsmtpsib-2397315cd9d59519dfea78f2abbe908bfefd2e868fa252514999e26ce54946fd-7bZz5Mfs12EScaT4'
