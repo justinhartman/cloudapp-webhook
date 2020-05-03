@@ -18,6 +18,7 @@ DateTime = "==4.3"
 Fabric3 = "==1.14.post1"
 Flask = "==1.1.2"
 gunicorn = "==20.0.4"
+sendgrid = "*"
 
 [requires]
 python_version = "3.7"
