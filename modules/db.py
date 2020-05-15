@@ -155,6 +155,33 @@ class Db:
 
         return insert_id
 
+    def insert_payload(self, p_event, p_name, p_url, p_created):
+        """
+        Insert webhook payload into payload table.
+
+        :param download_id: The payload identifier of the record downloaded.
+        :type  download_id: integer
+        :param drive_id:    Google Drive folder ID.
+        :type  drive_id:    string
+        :param drive_name:  The filename.
+        :type  drive_name:  string
+
+        :returns: Last row id
+        :rtype:   integer
+        """
+        conn = Db.create_connection()
+        cur = conn.cursor()
+        query = "INSERT INTO `payload` (`event`, `payload_item_name`, `payload_item_url`, \
+        `payload_created_at`, `created_at`, `downloaded`, `downloaded_at`) \
+            VALUES (?, ?, ?, ?, strftime('%Y-%m-%d %H:%M:%S', 'now'), 0, NULL)"
+        cur.execute(query, (p_event, p_name, p_url, p_created,))
+
+        conn.commit()
+        insert_id = cur.lastrowid
+        cur.close()
+
+        return insert_id
+
     def update_record(self, status, payload_id):
         """
         Update the downloaded column in the payload table.

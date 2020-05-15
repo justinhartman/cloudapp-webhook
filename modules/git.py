@@ -6,6 +6,8 @@ Git module.
 A module to store uploaded media and edited SQLite databases to GitHub.
 """
 from utility import Utility
+
+
 utl = Utility()
 
 
