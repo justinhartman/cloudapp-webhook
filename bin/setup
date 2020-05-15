@@ -18,11 +18,11 @@
 #######################################
 git_setup () {
     echo "🟢 Setting up the local git repository..."
-    rm .gitignore .gitattributes
+    rm .gitignore
     git init
     git remote add origin https://"${GITHUB_USERNAME}":"${GITHUB_WRITE_REPO}"@github.com/thecreativeacademy/heroku-media.git
-    git lfs track "*.mov"
-    git lfs track "*.mp4"
+    # git lfs track "*.mov"
+    # git lfs track "*.mp4"
     git config --global user.name "Automated Bot"
     git config --global user.email "j.hartman@ctca.co.za"
     git pull -f origin master
