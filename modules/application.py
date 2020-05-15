@@ -1,44 +1,54 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
 """
-The main application script.
+Application script.
 
-This runs a Flask server.
+This runs a Flask server which replaces the PHP Webhook functionality.
 """
-from flask import Flask, request
-from markupsafe import escape
+from flask import Flask, request, json
+
+from db import Db
+from git import git_commit
+from mail import send_api
+from settings import MAIL_ADMIN_FROM_ADDRESS
+from utility import Utility
+
 
 app = Flask(__name__)
 
 
-@app.route('/')
-def hello_world():
-    return 'Hello, World!'
+@app.route('/', methods=['POST'])
+def home():
+    utl = Utility()
+    db = Db()
+    admin_email = MAIL_ADMIN_FROM_ADDRESS
 
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
     if request.method == 'POST':
-        # return do_the_login()
-        return 'Returning POST...'
-    else:
-        # return show_the_login_form()
-        return 'Returning GET...'
+        details = json.loads(request.data)
+        p_event = details['event']
+        p_name = details['payload']['item_name']
+        p_url = details['payload']['item_url']
+        p_date = details['payload']['created_at']
 
-
-@app.route('/user/<username>')
-def show_user_profile(username):
-    # show the user profile for that user
-    return 'User %s' % escape(username)
-
-
-@app.route('/post/<int:post_id>')
-def show_post(post_id):
-    # show the post with the given id, the id is an integer
-    return 'Post %d' % post_id
-
-
-@app.route('/path/<path:subpath>')
-def show_subpath(subpath):
-    # show the subpath after /path/
-    return 'Subpath /%s' % escape(subpath)
+        try:
+            """Insert into the database."""
+            ins = db.insert_payload(p_event, p_name, p_url, p_date)
+            message = {'id': ins, 'item_name': p_name, 'item_url': p_url}
+            payload = utl.json_message('success', 200, message)
+        except Exception as e:
+            send_api(admin_email, 'Webhook DB insert exception', e)
+            print(e)
+        else:
+            try:
+                """Send mail with confirmation of db insert."""
+                subject = p_name + ' inserted into DB'
+                content = 'Inserted ' + p_name + ' (' + p_url + ') into db.'
+                send_api(admin_email, subject, content)
+            except Exception as e:
+                send_api(admin_email, 'Webhook email/git exception', e)
+                raise e
+            else:
+                """Commit changes to the git repo."""
+                git_commit()
+            finally:
+                return payload

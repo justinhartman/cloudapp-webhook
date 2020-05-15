@@ -6,13 +6,10 @@ The main application script.
 This script contains all the application code for downloading media from
 CloudApp and then uploading them to Google Drive using the Google Drive API.
 """
-import time
-
-import settings
 import downloads
-import git
 import media
 import rclone
+import settings
 from db import Db
 from utility import Utility
 

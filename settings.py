@@ -6,6 +6,8 @@ Application configuration file.
 A series of constants and module imports for reuse in the application.
 """
 import sys
+
+
 sys.path.append('./modules')
 """
 General.
@@ -49,10 +51,4 @@ Mail config.
 """
 MAIL_FROM_NAME = 'Creative Academy'
 MAIL_FROM_ADDRESS = 'noreply@ctca.co.za'
-"""
-SendInBlue email configuration.
-"""
-SIB_HOST = 'smtp-relay.sendinblue.com'
-SIB_PORT = 587
-SIB_USER = 'iamjustinhartman@gmail.com'
-SIB_PASS = 'xsmtpsib-2397315cd9d59519dfea78f2abbe908bfefd2e868fa252514999e26ce54946fd-7bZz5Mfs12EScaT4'
+MAIL_ADMIN_FROM_ADDRESS = 'iamjustinhartman@gmail.com'
