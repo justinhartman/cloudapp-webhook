@@ -17,6 +17,5 @@ def process(command, arg):
 
 
 print('🟢 Running the Python setup config subprocess command...')
-process('cd', '/app/')
-process('bash', './bin/setup')
+process('/bin/bash', './bin/setup')
 print('🟢 Completed the subprocess command!')
