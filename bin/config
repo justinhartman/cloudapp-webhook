@@ -8,9 +8,15 @@ Run the server-side setup scripts.
 import subprocess
 
 
-subprocess.run(
-    # ['./bin/setup', '>>', './logs/setup.log'],
-    ['./bin/setup'],
-    check=True,
-    text=True
-)
+def process(command, arg):
+    return subprocess.run(
+        [command, arg],
+        check=True,
+        text=True
+    )
+
+
+print('🟢 Running the Python setup config subprocess command...')
+process('cd', '/app/')
+process('bash', './bin/setup')
+print('🟢 Completed the subprocess command!')
