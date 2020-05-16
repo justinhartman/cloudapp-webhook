@@ -29,27 +29,6 @@ python_setup() {
 }
 
 #######################################
-# Cleanup Python files not needed.
-# Globals:
-#   None
-# Arguments:
-#   None
-# Returns:
-#   None
-#######################################
-python_cleanup() {
-    echo "🟢 Performing cleanup on server..."
-    rm .config/create.sql
-    rm .editorconfig
-    rm Aptfile
-    rm Pipfile
-    rm Pipfile.lock
-    rm README.md
-    rm requirements.txt
-    rm runtime.txt
-}
-
-#######################################
 # Setup the repo.
 # Globals:
 #   None
@@ -83,6 +62,7 @@ git_setup () {
 cleanup() {
     echo "🟢 Performing cleanup on server..."
     rm .config/create.sql
+    rm .editorconfig
     rm README.md
 }
 
@@ -90,5 +70,5 @@ cleanup() {
 # git_setup
 # cleanup
 python_setup
-python_cleanup
+cleanup
 exit 0
