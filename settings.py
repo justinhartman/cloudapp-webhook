@@ -51,4 +51,4 @@ Mail config.
 """
 MAIL_FROM_NAME = 'Creative Academy'
 MAIL_FROM_ADDRESS = 'noreply@ctca.co.za'
-MAIL_ADMIN_FROM_ADDRESS = 'iamjustinhartman@gmail.com'
+MAIL_ADMIN_FROM_ADDRESS = 'j.hartman@ctca.co.za'
