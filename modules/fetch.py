@@ -15,7 +15,7 @@ from utility import Utility
 def main():
     """
     Runs the ./bin/main app script which downloads media to the server, updates
-    the database with the records and then pushes all the media to Google Drive.
+    the database with the records and then pushes the media to Google Drive.
 
     :returns: Status of the execution.
     :rtype:   boolean
