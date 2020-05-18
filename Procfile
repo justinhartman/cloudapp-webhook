@@ -1,2 +1,2 @@
-release: python ./bin/config
+compile: python ./bin/config
 web: gunicorn wsgi:app
