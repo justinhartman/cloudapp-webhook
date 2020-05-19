@@ -10,6 +10,10 @@ import git
 from utility import Utility
 
 
+"""Setup the Utility class."""
+utl = Utility()
+
+
 def main():
     """
     Runs the ./bin/main app script which downloads media to the server, updates
@@ -18,9 +22,6 @@ def main():
     :returns: Status of the execution.
     :rtype:   boolean
     """
-    """Setup the Utility class."""
-    utl = Utility()
-
     """cd into the /app directory."""
     command = ['cd', '/app/']
     utl.sub_process(command)
@@ -38,9 +39,22 @@ def main():
     utl.timestamp_message("🟢 Committing db and log files to repo.")
     git.git_commit()
 
-    utl.timestamp_message("🟢 Done.")
+    return True
+
+
+def commit():
+    """
+    Commit files to media repo.
+
+    :returns: Status of execution.
+    :rtype:   boolean
+    """
+    utl.timestamp_message("🟢 Committing db and log files to repo.")
+    git.git_commit()
+
     return True
 
 
 if __name__ == '__main__':
     main()
+    commit()
