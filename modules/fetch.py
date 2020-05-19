@@ -34,7 +34,7 @@ def main():
 
     # Run the main.py script.
     utl.timestamp_message("🟢 Executing ./bin/main...")
-    command = ['./bin/main', '>>', './logs/python.log']
+    command = ['./bin/main', '>>', './logs/app.log']
     utl.sub_process(command)
 
     # Commit files to media repo.
