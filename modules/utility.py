@@ -99,22 +99,6 @@ class Utility:
 
         return build
 
-    def timestamp_message(self, message):
-        """
-        Return a formatted log file entry with date and time.
-
-        :param message: The message to include in the log file.
-        :type  message: object
-
-        :returns: Formatted log file message.
-        :rtype:   string
-        """
-        clean = str(message)
-        build = Utility.date_time(self, 2) + " :~$ " + clean
-        message = print(build)
-
-        return message
-
     def timestamp_tail(self, end, start):
         """
         Return a footer containing the time to run script for the log file.

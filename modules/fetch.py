@@ -7,6 +7,7 @@ Script executes the main app and commits file addition and changes to the
 GitHub repository.
 """
 import git
+import log
 from utility import Utility
 
 
@@ -27,12 +28,11 @@ def main():
     utl.sub_process(command)
 
     """Fetch latest files."""
-    utl.timestamp_message("🟢 Fetching latest repo changes.")
     git.git_pull()
 
     """Run the main.py script."""
-    utl.timestamp_message("🟢 Executing ./bin/main")
-    command = ['./bin/main', '>>', './logs/app.log']
+    log.doc('info', f"Executing ./bin/main")
+    command = ['./bin/main']
     utl.sub_process(command)
 
     return True
@@ -45,7 +45,6 @@ def commit():
     :returns: Status of execution.
     :rtype:   boolean
     """
-    utl.timestamp_message("🟢 Committing db and log files to repo.")
     git.git_commit()
 
     return True
