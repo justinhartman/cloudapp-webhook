@@ -13,7 +13,7 @@ def doc(t, m):
     Document a log entry to the log file.
 
     :param t: Type of log entry to record. Can be one of info, debug, warn,
-              error, critical, or exception.
+              error, critical, exception or general.
     :type  t: string
     :param m: Log message text.
     :type  m: string
@@ -24,21 +24,24 @@ def doc(t, m):
     logger = logging.getLogger(__name__)
     logging.basicConfig(
         level=logging.NOTSET,
-        format='[🕒 %(asctime)s] %(name)s %(levelname)s: %(message)s',
+        format='🕒 %(asctime)s :~$ %(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S',
         filename='./logs/app.log'
     )
 
     if "critical" is t:
-        data = logger.critical(m)
+        data = logger.critical(f"‼️ {m}")
     elif "error" is t:
-        data = logger.error(m)
+        data = logger.error(f"🔴 {m}")
     elif "warning" is t:
-        data = logger.warning(m)
+        data = logger.warning(f"🟠 {m}")
     elif "debug" is t:
-        data = logger.debug(m)
+        data = logger.debug(f"🐛 {m}")
     elif "except" is t:
-        data = logger.exception(m)
+        data = logger.exception(f"❌ {m}")
+    elif "general" is t:
+        data = logger.info(f"{m}")
     else:
-        data = logger.info(m)
+        data = logger.info(f"🟢 {m}")
 
     return data
