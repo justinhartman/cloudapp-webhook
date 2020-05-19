@@ -6,8 +6,6 @@ Fetch script.
 Script executes the main app and commits file addition and changes to the
 GitHub repository.
 """
-import time
-
 import git
 from utility import Utility
 
@@ -20,30 +18,27 @@ def main():
     :returns: Status of the execution.
     :rtype:   boolean
     """
-    # Setup the Utility class and start the timer.
+    """Setup the Utility class."""
     utl = Utility()
-    started = time.time()
 
-    # cd into the /app directory.
-    utl.timestamp_top()
+    """cd into the /app directory."""
     command = ['cd', '/app/']
     utl.sub_process(command)
 
-    # Fetch latest files.
+    """Fetch latest files."""
+    utl.timestamp_message("🟢 Fetching latest repo changes.")
     git.git_pull()
 
-    # Run the main.py script.
-    utl.timestamp_message("🟢 Executing ./bin/main...")
+    """Run the main.py script."""
+    utl.timestamp_message("🟢 Executing ./bin/main")
     command = ['./bin/main', '>>', './logs/app.log']
     utl.sub_process(command)
 
-    # Commit files to media repo.
+    """Commit files to media repo."""
+    utl.timestamp_message("🟢 Committing db and log files to repo.")
     git.git_commit()
 
-    # Stop the timer and output the time took to run the script
-    completed = time.time()
-    utl.timestamp_tail(completed, started)
-
+    utl.timestamp_message("🟢 Done.")
     return True
 
 
