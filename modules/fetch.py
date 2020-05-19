@@ -35,10 +35,6 @@ def main():
     command = ['./bin/main', '>>', './logs/app.log']
     utl.sub_process(command)
 
-    """Commit files to media repo."""
-    utl.timestamp_message("🟢 Committing db and log files to repo.")
-    git.git_commit()
-
     return True
 
 
