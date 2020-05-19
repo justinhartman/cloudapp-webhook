@@ -6,6 +6,7 @@ The main application script.
 This script contains all the application code for downloading media from
 CloudApp and then uploading them to Google Drive using the Google Drive API.
 """
+import time
 import downloads
 import media
 import rclone
@@ -21,9 +22,16 @@ def main():
     :returns: True|Error
     :rtype:   boolean|string
     """
+    """Setup the Utility class, start the timer and print log file header."""
     utl = Utility()
+    started = time.time()
+    utl.timestamp_top()
+
+    """Setup database connection."""
     utl.timestamp_message("🟢 Opening the DB connection.")
     con = Db()
+
+    """Get records from database."""
     utl.timestamp_message("🟢 Getting list of records to process from DB.")
     rows = con.select_all()
     for row in rows:
@@ -85,6 +93,10 @@ def main():
             utl.timestamp_message("🔴 Unknown Error. ⚠️  " + str(status))
     else:
         utl.timestamp_message("🟢 Finished running.")
+
+    """Stop the timer and output the time took to run the script."""
+    completed = time.time()
+    utl.timestamp_tail(completed, started)
 
     return True
 
