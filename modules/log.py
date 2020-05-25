@@ -45,3 +45,23 @@ def doc(t, m):
         data = logger.info(f"🟢 {m}")
 
     return data
+
+
+def tail(m):
+    """
+    Document a log entry to the log file.
+
+    :param m: Log message text.
+    :type  m: string
+
+    :returns: Log file with message.
+    :rtype:   mixed
+    """
+    logger = logging.getLogger(__name__)
+    logging.basicConfig(
+        level=logging.NOTSET,
+        format='%(message)s',
+        filename='./logs/app.log'
+    )
+
+    return logger.info(m)
