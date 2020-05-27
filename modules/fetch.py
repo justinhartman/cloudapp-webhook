@@ -6,46 +6,50 @@ Fetch script.
 Script executes the main app and commits file addition and changes to the
 GitHub repository.
 """
-import time
-
 import git
+import log
 from utility import Utility
+
+
+"""Setup the Utility class."""
+utl = Utility()
 
 
 def main():
     """
     Runs the ./bin/main app script which downloads media to the server, updates
-    the database with the records and then pushes all the media to Google Drive.
+    the database with the records and then pushes the media to Google Drive.
 
     :returns: Status of the execution.
     :rtype:   boolean
     """
-    # Setup the Utility class and start the timer.
-    utl = Utility()
-    started = time.time()
-
-    # cd into the /app directory.
-    utl.timestamp_top()
+    """cd into the /app directory."""
     command = ['cd', '/app/']
     utl.sub_process(command)
 
-    # Fetch latest files.
+    """Fetch latest files."""
     git.git_pull()
 
-    # Run the main.py script.
-    utl.timestamp_message("🟢 Executing ./bin/main...")
-    command = ['./bin/main', '>>', './logs/python.log']
+    """Run the main.py script."""
+    log.doc('info', f"Executing ./bin/main")
+    command = ['./bin/main']
     utl.sub_process(command)
 
-    # Commit files to media repo.
-    git.git_commit()
+    return True
 
-    # Stop the timer and output the time took to run the script
-    completed = time.time()
-    utl.timestamp_tail(completed, started)
+
+def commit():
+    """
+    Commit files to media repo.
+
+    :returns: Status of execution.
+    :rtype:   boolean
+    """
+    git.git_commit()
 
     return True
 
 
 if __name__ == '__main__':
     main()
+    commit()

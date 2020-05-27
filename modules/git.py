@@ -6,6 +6,9 @@ Git module.
 A module to store uploaded media and edited SQLite databases to GitHub.
 """
 from utility import Utility
+import log
+
+
 utl = Utility()
 
 
@@ -13,7 +16,7 @@ def git_pull():
     """
     Fetch the latest files from the GitHub media repository.
     """
-    utl.timestamp_message("🟢 Git: pulling latest media repository.")
+    log.doc('info', f"Git: pulling latest media repository.")
     pull = ['git', 'pull', '--quiet', 'origin', 'master']
     process = utl.sub_process(pull)
 
@@ -24,7 +27,7 @@ def git_commit():
     """
     Commit the latest files to the GitHub media repository.
     """
-    utl.timestamp_message("🟢 Git: committing files to GitHub repository.")
+    log.doc('info', f"Git: committing files to GitHub repository.")
     add = ['git', 'add', 'database', 'logs']
     process_add = utl.sub_process(add)
 

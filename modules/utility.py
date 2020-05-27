@@ -14,6 +14,7 @@ import time
 from datetime import datetime, timedelta
 
 import requests
+from flask import jsonify
 
 
 class Utility:
@@ -97,22 +98,6 @@ class Utility:
         build = print(head), print(subj), print(line)
 
         return build
-
-    def timestamp_message(self, message):
-        """
-        Return a formatted log file entry with date and time.
-
-        :param message: The message to include in the log file.
-        :type  message: object
-
-        :returns: Formatted log file message.
-        :rtype:   string
-        """
-        clean = str(message)
-        build = Utility.date_time(self, 2) + " :~$ " + clean
-        message = print(build)
-
-        return message
 
     def timestamp_tail(self, end, start):
         """
@@ -229,3 +214,23 @@ class Utility:
             )
         except:
             return False
+
+    def json_message(self, pevent, pcode, pmessage):
+        """
+        Returns Flask JSON object containing the status of a request.
+
+        :param pevent:   The object event name.
+        :type  pevent:   string
+        :param pcode:    Return status code.
+        :type  pcode:    integer
+        :param pmessage: Message text (can be array or string).
+        :type  pmessage: mixed
+
+        :returns: JSON encoded message.
+        :rtype:   object
+        """
+        return jsonify(
+            event=pevent,
+            code=pcode,
+            payload=pmessage
+        )
