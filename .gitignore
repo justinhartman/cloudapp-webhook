@@ -11,6 +11,7 @@
 /vendor/
 # Python
 /pythontest/
+/modules/__init__.py
 # Dev items.
 /.nova/
 /old/
@@ -19,3 +20,4 @@ makefile
 *.pyc
 __pycache__/
 /logs
+/modules/mailgun.py

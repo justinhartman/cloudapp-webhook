@@ -22,7 +22,7 @@ def upload_gdrive(filename):
     src = 'local:' + src_path
 
     command = ['rclone', 'copy', '-P', src, dst]
-    process = subprocess.run(
+    subprocess.run(
         command,
         check=True,
         text=True

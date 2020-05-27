@@ -6,6 +6,8 @@ Application configuration file.
 A series of constants and module imports for reuse in the application.
 """
 import sys
+
+
 sys.path.append('./modules')
 """
 General.
@@ -44,3 +46,9 @@ Rclone Drive values.
 RCLONE_GDRIVE_IMAGE = 'gdrive:1. CloudApp Images'
 RCLONE_GDRIVE_VIDEO = 'gdrive:2. CloudApp Videos'
 RCLONE_GDRIVE_OTHER = 'gdrive:3. CloudApp Uncategorised'
+"""
+Mail config.
+"""
+MAIL_FROM_NAME = 'Creative Academy'
+MAIL_FROM_ADDRESS = 'noreply@ctca.co.za'
+MAIL_ADMIN_FROM_ADDRESS = 'j.hartman@ctca.co.za'

@@ -1,7 +1,35 @@
 # Creative Academy CloudApp/Drive Webhook
 
 This project creates a webhook for [CloudApp][cloudapp] to upload video and
-images to the [Creative Academy][ctca] Google Drive API. 
+images to the [Creative Academy][ctca] Google Drive API.
+
+## Install
+
+### Virtual Environment
+
+```console
+$ pipenv run python3 -m pip install --upgrade pip
+$ pipenv install
+$ pipenv sync --sequential
+```
+
+### Shell Envrionment
+
+```console
+$ pipenv shell
+```
+
+Optionally, run a command without being in shell:
+
+```console
+$ pipenv run [OPTIONS] COMMAND [ARGS]
+```
+
+End session:
+
+```console
+$ deactivate
+```
 
 ## License
 
