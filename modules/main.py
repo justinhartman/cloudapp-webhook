@@ -6,13 +6,12 @@ The main application script.
 This script contains all the application code for downloading media from
 CloudApp and then uploading them to Google Drive using the Google Drive API.
 """
+import log
 import time
-
-import settings
 import downloads
-import git
 import media
 import rclone
+import settings
 from db import Db
 from utility import Utility
 
@@ -24,10 +23,17 @@ def main():
     :returns: True|Error
     :rtype:   boolean|string
     """
+    """Setup the Utility class, start the timer and print log file header."""
     utl = Utility()
-    utl.timestamp_message("🟢 Opening the DB connection.")
+    started = time.time()
+    log.doc('general', utl.timestamp_top())
+
+    """Setup database connection."""
+    log.doc('info', f"Opening the DB connection.")
     con = Db()
-    utl.timestamp_message("🟢 Getting list of records to process from DB.")
+
+    """Get records from database."""
+    log.doc('info', f"Getting list of records to process from DB.")
     rows = con.select_all()
     for row in rows:
         """Define variables for reuse."""
@@ -40,7 +46,7 @@ def main():
 
         """Make sure the media folder actually exists."""
         if utl.check_path(settings.MEDIA_PATH) is False:
-            utl.timestamp_message("🔴 ERROR: Media folder not valid.")
+            log.doc('error', f"Media folder not valid.")
             return False
 
         """If no name is set, build a name and check the filetype."""
@@ -56,38 +62,42 @@ def main():
             name = new_name
 
         """Check status, file size and link of the media url."""
-        utl.timestamp_message("🟢 Checking media details for  \"" + name + "\"")
+        log.doc('info', f"Checking media details for {name}.")
         status, size, download = utl.media(download_url)
 
         """Download file, Update database and Upload to Drive if successful."""
         if status == 200:
             # Download the file to server.
-            utl.timestamp_message("🟢 Downloading \"" + name + "\"")
+            log.doc('info', f"Downloading {name}")
             downloads.aria_download(name, download)
-            utl.timestamp_message("🟢 "+str(status)+": "+name+" ("+link+")")
+            log.doc('info', f"{status}: {name} ({link})")
 
             # Insert downloaded file to the downloads table.
             rid = con.insert_record(item_id, size, status)
-            utl.timestamp_message("📁 "+str(rid)+" inserted in downloads.")
+            log.doc('general', f"📁 {rid} inserted in downloads.")
 
             # Update payload table.
             con.update_record(1, item_id)
-            utl.timestamp_message("🟢 Updated ID: " + str(item_id))
+            log.doc('info', f"Updated ID: {item_id}")
 
             # Upload file to drive.
-            utl.timestamp_message("🟢 Uploading to Google Drive.")
+            log.doc('info', f"Uploading to Google Drive.")
             file_name = rclone.upload_gdrive(name)
 
             # Insert Upload into uploads table.
             con.insert_upload(rid, item_id, file_name)
-            utl.timestamp_message("📁 "+file_name+" inserted in uploads.")
+            log.doc('general', f"📁 {file_name} inserted in uploads.")
         elif status == 404:
             con.update_record(2, item_id)
-            utl.timestamp_message("🔴 404 file not found.")
+            log.doc('error', f"404 file not found.")
         else:
-            utl.timestamp_message("🔴 Unknown Error. ⚠️  " + str(status))
+            log.doc('error', f"Unknown Error. ⚠️ {status}.")
     else:
-        utl.timestamp_message("🟢 Finished running.")
+        log.doc('info', f"Finished running.")
+
+    """Stop the timer and output the time took to run the script."""
+    completed = time.time()
+    log.doc('general', utl.timestamp_tail(completed, started))
 
     return True
 
