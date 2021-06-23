@@ -31,7 +31,7 @@ MEDIA_PATH = APP_HOME + 'media/'
 MEDIA_IMAGE = MEDIA_PATH + 'images/'
 MEDIA_OTHER = MEDIA_PATH + 'other/'
 MEDIA_VIDEO = MEDIA_PATH + 'videos/'
-HTTP_URL = 'https://media.ctca.co.za'
+HTTP_URL = 'https://example.com'
 DATABASE_PATH = APP_HOME + 'database/database.sqlite'
 """
 Google Drive constants.
@@ -49,6 +49,6 @@ RCLONE_GDRIVE_OTHER = 'gdrive:3. CloudApp Uncategorised'
 """
 Mail config.
 """
-MAIL_FROM_NAME = 'Creative Academy'
-MAIL_FROM_ADDRESS = 'noreply@ctca.co.za'
-MAIL_ADMIN_FROM_ADDRESS = 'j.hartman@ctca.co.za'
+MAIL_FROM_NAME = 'Example App'
+MAIL_FROM_ADDRESS = 'noreply@example.com'
+MAIL_ADMIN_FROM_ADDRESS = 'user@example.com'

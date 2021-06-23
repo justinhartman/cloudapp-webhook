@@ -3,7 +3,7 @@
 # Cron job script to commit files to the repo.
 # /app/main >> /app/logs/python.log && /app/bin/commit
 #
-# Author: Justin Hartman <j.hartman@ctca.co.za>
+# Author: Justin Hartman <me@justinhartman.co>
 # Version: 1.0.0
 # Copyright (c) 2020 Creative Academy <https://creativeacademy.ac.za>
 #
