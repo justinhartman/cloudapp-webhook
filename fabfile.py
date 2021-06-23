@@ -53,18 +53,18 @@ Heroku Specific Methods.
 
 
 def fetch():
-    c = '/usr/local/bin/heroku run /app/bin/fetch -a cloudapp-webhooks'
+    c = '/usr/local/bin/heroku run /app/bin/fetch -a cloudapp-python'
     r = local(c)
     return r.return_code
 
 
 def ps():
-    r = local('/usr/local/bin/heroku ps -a cloudapp-webhooks')
+    r = local('/usr/local/bin/heroku ps -a cloudapp-python')
     return r.return_code
 
 
 def exec():
-    r = local('/usr/local/bin/heroku ps:exec -a cloudapp-webhooks')
+    r = local('/usr/local/bin/heroku ps:exec -a cloudapp-python')
     return r.return_code
 
 
@@ -74,13 +74,13 @@ def exec_staging():
 
 
 def tail_worker():
-    c = '/usr/local/bin/heroku logs --tail --ps worker -a cloudapp-webhooks'
+    c = '/usr/local/bin/heroku logs --tail --ps worker -a cloudapp-python'
     r = local(c)
     return r.return_code
 
 
 def tail():
-    r = local('/usr/local/bin/heroku logs --tail -a cloudapp-webhooks')
+    r = local('/usr/local/bin/heroku logs --tail -a cloudapp-python')
     return r.return_code
 
 
@@ -96,6 +96,6 @@ def test():
 
 
 def remote():
-    c = '/usr/local/bin/heroku ps:exec -a cloudapp-webhooks'
+    c = '/usr/local/bin/heroku ps:exec -a cloudapp-python'
     with local(c):
         run('ls -lha')

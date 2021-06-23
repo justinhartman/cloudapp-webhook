@@ -89,7 +89,7 @@ your `HTTP_URL` and the endpoint only accepts a `POST` request.
 Consider the following `cURL` request:
 
 ```
-curl -X POST --location "https://cloudapp-webhooks.herokuapp.com" \
+curl -X POST --location "https://cloudapp-python.herokuapp.com" \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
     -d "{
@@ -102,10 +102,32 @@ curl -X POST --location "https://cloudapp-webhooks.herokuapp.com" \
         }"
 ```
 
-CloudApp will send a `POST` request to `https://cloudapp-webhooks.herokuapp.com`
+CloudApp will send a `POST` request to `https://cloudapp-python.herokuapp.com`
 and it should always contain the `event` and `payload` properties. The app will
 use these and save the `event`, `item_name`, `item_url`, and `created_at` in the
 SQLite database and return a `success` message with a `200` response code.
+
+```
+HTTP/1.1 200 OK
+Connection: keep-alive
+Server: nginx
+Date: Wed, 23 Jun 2021 23:18:27 GMT
+Content-Type: application/json
+Transfer-Encoding: chunked
+Via: 1.1 vegur
+
+{
+  "event": "success",
+  "code": 200,
+  "payload": {
+    "id": "207",
+    "item_name": "Test Image",
+    "item_url": "https:\/\/cloudapp.com\/image.jpg"
+  }
+}
+
+Response code: 200 (OK); Time: 1890ms; Content length: 125 bytes
+```
 
 The app will also send out an email to the email address configured in
 `settings.py` confirming the new media upload.
